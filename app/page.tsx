@@ -7,6 +7,41 @@ import { QRCodeSVG } from "qrcode.react";
 const CLOUDINARY_CLOUD_NAME = "dy2wfdyzl";
 const CLOUDINARY_MUSIC_PRESET = "kartkutusu_music";
 
+const themes = {
+  pink: {
+    bg: "bg-gradient-to-br from-pink-200 via-rose-100 to-purple-200",
+    card: "bg-white border-rose-100",
+    title: "text-rose-600",
+    button: "bg-rose-500",
+    text: "text-gray-800",
+    icon: "🎂",
+  },
+  blue: {
+    bg: "bg-gradient-to-br from-sky-200 via-blue-100 to-indigo-200",
+    card: "bg-white border-blue-100",
+    title: "text-blue-600",
+    button: "bg-blue-500",
+    text: "text-gray-800",
+    icon: "💙",
+  },
+  gold: {
+    bg: "bg-gradient-to-br from-yellow-200 via-amber-100 to-orange-200",
+    card: "bg-white border-yellow-200",
+    title: "text-amber-600",
+    button: "bg-amber-500",
+    text: "text-gray-800",
+    icon: "👑",
+  },
+  dark: {
+    bg: "bg-gradient-to-br from-gray-950 via-purple-950 to-black",
+    card: "bg-white/10 border-white/20",
+    title: "text-yellow-300",
+    button: "bg-yellow-500",
+    text: "text-gray-100",
+    icon: "🖤",
+  },
+};
+
 export default function Home() {
   const [blown, setBlown] = useState(false);
   const [name, setName] = useState("");
@@ -19,12 +54,13 @@ export default function Home() {
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
-  const [theme, setTheme] = useState("pink");
+  const [theme, setTheme] = useState<keyof typeof themes>("pink");
   const [cardLink, setCardLink] = useState("");
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const selectedTheme = themes[theme];
 
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -138,12 +174,12 @@ export default function Home() {
 
   if (blown) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-rose-100 to-purple-200 p-6 overflow-hidden relative">
+      <main className={`min-h-screen flex items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}>
         <Confetti />
         {musicSource && <audio ref={audioRef} src={musicSource} />}
 
-        <section className="relative z-10 w-full max-w-2xl rounded-3xl bg-white shadow-2xl border border-rose-100 p-8 text-center">
-          <div className="text-7xl mb-4">🎂</div>
+        <section className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} shadow-2xl border p-8 text-center`}>
+          <div className="text-7xl mb-4">{selectedTheme.icon}</div>
 
           {photo && (
             <img
@@ -153,17 +189,17 @@ export default function Home() {
             />
           )}
 
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-rose-600">
+          <h1 className={`text-4xl md:text-5xl font-extrabold mb-4 ${selectedTheme.title}`}>
             İyi Ki Doğdun {name || "Arkadaşım"}! 🎉
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-800 leading-relaxed max-w-xl mx-auto">
+          <p className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}>
             {message || "Mutlu yıllar!"}
           </p>
 
           <button
             onClick={() => setBlown(false)}
-            className="mt-8 bg-rose-500 text-white px-6 py-3 rounded-2xl shadow font-semibold hover:scale-105 transition"
+            className={`mt-8 ${selectedTheme.button} text-white px-6 py-3 rounded-2xl shadow font-semibold hover:scale-105 transition`}
           >
             Geri Dön
           </button>
@@ -249,7 +285,7 @@ export default function Home() {
                   <button
                     key={value}
                     type="button"
-                    onClick={() => setTheme(value)}
+                    onClick={() => setTheme(value as keyof typeof themes)}
                     className={`rounded-2xl border p-3 text-sm font-bold transition ${
                       theme === value
                         ? "border-purple-600 bg-purple-50 text-purple-700"
