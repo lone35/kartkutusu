@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import Confetti from "react-confetti";
 import { QRCodeSVG } from "qrcode.react";
 
+const CLOUDINARY_CLOUD_NAME = "dy2wfdyzl";
+const CLOUDINARY_MUSIC_PRESET = "kartkutusu_music";
+
 export default function Home() {
   const [blown, setBlown] = useState(false);
   const [name, setName] = useState("");
@@ -45,7 +48,7 @@ export default function Home() {
     }, 500);
   }
 
-  async function uploadFile(file: File) {
+  async function uploadPhoto(file: File) {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -57,10 +60,34 @@ export default function Home() {
     const data = await response.json();
 
     if (!data.success) {
-      throw new Error("Dosya yüklenemedi");
+      throw new Error("Fotoğraf yüklenemedi");
     }
 
     return data.url;
+  }
+
+  async function uploadMusicDirectlyToCloudinary(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_MUSIC_PRESET);
+    formData.append("folder", "kartkutusu/music");
+
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.secure_url) {
+      console.error("Cloudinary music upload error:", data);
+      throw new Error("Müzik yüklenemedi");
+    }
+
+    return data.secure_url;
   }
 
   async function saveCard() {
@@ -71,9 +98,17 @@ export default function Home() {
       let photoUrl = "";
       let musicUrl = "";
 
-      if (photoFile) photoUrl = await uploadFile(photoFile);
-      if (musicType === "upload" && musicFile) musicUrl = await uploadFile(musicFile);
-      if (musicType === "named") musicUrl = selectedSong;
+      if (photoFile) {
+        photoUrl = await uploadPhoto(photoFile);
+      }
+
+      if (musicType === "upload" && musicFile) {
+        musicUrl = await uploadMusicDirectlyToCloudinary(musicFile);
+      }
+
+      if (musicType === "named") {
+        musicUrl = selectedSong;
+      }
 
       const response = await fetch("/api/cards", {
         method: "POST",
