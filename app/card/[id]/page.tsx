@@ -1,16 +1,18 @@
 import { connectDB } from "@/lib/mongodb";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function CardPage({ params }: PageProps) {
+  const { id } = await params;
+
   const db = await connectDB();
 
   const card = await db.collection("cards").findOne({
-    cardId: params.id,
+    cardId: id,
   });
 
   if (!card) {
@@ -23,6 +25,14 @@ export default async function CardPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-pink-100 p-6">
+      {card.photoUrl && (
+        <img
+          src={card.photoUrl}
+          alt="Kart fotoğrafı"
+          className="w-56 h-56 object-cover rounded-full border-4 border-white shadow-xl mb-6"
+        />
+      )}
+
       <h1 className="text-5xl font-bold mb-4 text-center">
         🎉 İyi Ki Doğdun {card.name || "Arkadaşım"}!
       </h1>

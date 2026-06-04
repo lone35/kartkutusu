@@ -8,6 +8,7 @@ export default function Home() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
   const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
@@ -19,6 +20,8 @@ export default function Home() {
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setPhotoFile(file);
     setPhoto(URL.createObjectURL(file));
   }
 
@@ -38,24 +41,53 @@ export default function Home() {
     }, 500);
   }
 
-  async function saveCard() {
-    setSaving(true);
+  async function uploadPhotoToCloudinary() {
+    if (!photoFile) return "";
 
-    const response = await fetch("/api/cards", {
+    const formData = new FormData();
+    formData.append("file", photoFile);
+
+    const response = await fetch("/api/upload", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, message }),
+      body: formData,
     });
 
     const data = await response.json();
 
-    if (data.success) {
-      setCardLink(`${window.location.origin}/card/${data.cardId}`);
+    if (!data.success) {
+      throw new Error("Fotoğraf yüklenemedi");
     }
 
-    setSaving(false);
+    return data.url;
+  }
+
+  async function saveCard() {
+    try {
+      setSaving(true);
+
+      const photoUrl = await uploadPhotoToCloudinary();
+
+      const response = await fetch("/api/cards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, message, photoUrl }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setCardLink(`${window.location.origin}/card/${data.cardId}`);
+      } else {
+        alert("Kart kaydedilemedi.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Bir hata oluştu. Terminali kontrol et kankam.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   const musicSource = musicType === "named" ? selectedSong : uploadedSong;

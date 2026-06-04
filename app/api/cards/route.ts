@@ -16,6 +16,7 @@ export async function POST(req: Request) {
       cardId,
       name: body.name || "",
       message: body.message || "",
+      photoUrl: body.photoUrl || "",
       createdAt: new Date(),
     });
 
@@ -27,10 +28,7 @@ export async function POST(req: Request) {
     console.error(error);
 
     return NextResponse.json(
-      {
-        success: false,
-        message: "Kart kaydedilemedi",
-      },
+      { success: false, message: "Kart kaydedilemedi" },
       { status: 500 }
     );
   }
