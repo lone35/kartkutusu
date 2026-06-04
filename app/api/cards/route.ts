@@ -18,6 +18,7 @@ export async function POST(req: Request) {
       message: body.message || "",
       photoUrl: body.photoUrl || "",
       musicUrl: body.musicUrl || "",
+      theme: body.theme || "pink",
       createdAt: new Date(),
     });
 

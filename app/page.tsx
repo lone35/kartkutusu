@@ -19,6 +19,7 @@ export default function Home() {
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
+  const [theme, setTheme] = useState("pink");
   const [cardLink, setCardLink] = useState("");
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -98,24 +99,18 @@ export default function Home() {
       let photoUrl = "";
       let musicUrl = "";
 
-      if (photoFile) {
-        photoUrl = await uploadPhoto(photoFile);
-      }
-
+      if (photoFile) photoUrl = await uploadPhoto(photoFile);
       if (musicType === "upload" && musicFile) {
         musicUrl = await uploadMusicDirectlyToCloudinary(musicFile);
       }
-
-      if (musicType === "named") {
-        musicUrl = selectedSong;
-      }
+      if (musicType === "named") musicUrl = selectedSong;
 
       const response = await fetch("/api/cards", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, message, photoUrl, musicUrl }),
+        body: JSON.stringify({ name, message, photoUrl, musicUrl, theme }),
       });
 
       const data = await response.json();
@@ -145,7 +140,6 @@ export default function Home() {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-rose-100 to-purple-200 p-6 overflow-hidden relative">
         <Confetti />
-
         {musicSource && <audio ref={audioRef} src={musicSource} />}
 
         <section className="relative z-10 w-full max-w-2xl rounded-3xl bg-white shadow-2xl border border-rose-100 p-8 text-center">
@@ -241,6 +235,32 @@ export default function Home() {
               onChange={(e) => setMessage(e.target.value)}
               className="border border-rose-200 bg-white p-4 rounded-2xl w-full h-32 outline-none focus:ring-2 focus:ring-rose-300 text-gray-900 placeholder:text-gray-500"
             />
+
+            <div className="bg-white border border-rose-200 p-4 rounded-2xl text-gray-900">
+              <h3 className="font-bold mb-3 text-gray-900">🎨 Tema Seçimi</h3>
+
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  ["pink", "🌸 Romantik Pembe"],
+                  ["blue", "💙 Mavi Sürpriz"],
+                  ["gold", "👑 Altın Lüks"],
+                  ["dark", "🖤 Siyah Premium"],
+                ].map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setTheme(value)}
+                    className={`rounded-2xl border p-3 text-sm font-bold transition ${
+                      theme === value
+                        ? "border-purple-600 bg-purple-50 text-purple-700"
+                        : "border-rose-200 bg-white text-gray-800"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
             <label className="block bg-white border border-rose-200 rounded-2xl p-4 cursor-pointer text-gray-900">
               <p className="font-bold text-gray-900 mb-2">📸 Fotoğraf seç</p>

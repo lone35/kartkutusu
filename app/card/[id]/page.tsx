@@ -30,6 +30,7 @@ export default async function CardPage({ params }: PageProps) {
       message={card.message || ""}
       photoUrl={card.photoUrl || ""}
       musicUrl={card.musicUrl || ""}
+      theme={card.theme || "pink"}
     />
   );
 }
