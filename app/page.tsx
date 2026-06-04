@@ -11,6 +11,8 @@ export default function Home() {
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
   const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
+  const [cardLink, setCardLink] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -34,6 +36,26 @@ export default function Home() {
         console.log("Müzik otomatik başlatılamadı.");
       });
     }, 500);
+  }
+
+  async function saveCard() {
+    setSaving(true);
+
+    const response = await fetch("/api/cards", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, message }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setCardLink(`${window.location.origin}/card/${data.cardId}`);
+    }
+
+    setSaving(false);
   }
 
   const musicSource = musicType === "named" ? selectedSong : uploadedSong;
@@ -154,10 +176,27 @@ export default function Home() {
 
       <button
         onClick={startCard}
-        className="bg-red-500 text-white px-6 py-3 rounded-xl text-xl"
+        className="bg-red-500 text-white px-6 py-3 rounded-xl text-xl mb-3"
       >
         Mumları Üfle
       </button>
+
+      <button
+        onClick={saveCard}
+        disabled={saving}
+        className="bg-purple-600 text-white px-6 py-3 rounded-xl text-xl disabled:opacity-50"
+      >
+        {saving ? "Kaydediliyor..." : "Kartı Kaydet ve Link Oluştur"}
+      </button>
+
+      {cardLink && (
+        <div className="mt-4 bg-white p-4 rounded-xl shadow w-full max-w-md text-center">
+          <p className="font-bold mb-2">Kart Linkin:</p>
+          <a href={cardLink} className="text-blue-600 underline break-all">
+            {cardLink}
+          </a>
+        </div>
+      )}
     </main>
   );
 }

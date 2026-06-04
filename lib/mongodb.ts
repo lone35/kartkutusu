@@ -12,3 +12,5 @@ export async function connectDB() {
   await client.connect();
   return client.db("kartkutusu");
 }
+
+export { client };

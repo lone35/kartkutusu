@@ -1,14 +1,27 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 
-export async function GET() {
+function createCardId() {
+  return Math.random().toString(36).substring(2, 10);
+}
+
+export async function POST(req: Request) {
   try {
+    const body = await req.json();
     const db = await connectDB();
+
+    const cardId = createCardId();
+
+    await db.collection("cards").insertOne({
+      cardId,
+      name: body.name || "",
+      message: body.message || "",
+      createdAt: new Date(),
+    });
 
     return NextResponse.json({
       success: true,
-      message: "MongoDB bağlantısı başarılı 🚀",
-      database: db.databaseName,
+      cardId,
     });
   } catch (error) {
     console.error(error);
@@ -16,9 +29,16 @@ export async function GET() {
     return NextResponse.json(
       {
         success: false,
-        message: "MongoDB bağlantı hatası",
+        message: "Kart kaydedilemedi",
       },
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    success: true,
+    message: "Cards API çalışıyor 🚀",
+  });
 }
