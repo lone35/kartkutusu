@@ -17,6 +17,7 @@ export async function POST(req: Request) {
       name: body.name || "",
       message: body.message || "",
       photoUrl: body.photoUrl || "",
+      photoUrls: body.photoUrls || [],
       musicUrl: body.musicUrl || "",
       theme: body.theme || "pink",
       createdAt: new Date(),

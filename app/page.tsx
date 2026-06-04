@@ -44,10 +44,13 @@ const themes = {
 
 export default function Home() {
   const [blown, setBlown] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [photo, setPhoto] = useState<string | null>(null);
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
+
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
+  const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
   const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
@@ -63,10 +66,12 @@ export default function Home() {
   const selectedTheme = themes[theme];
 
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setPhotoFile(file);
-    setPhoto(URL.createObjectURL(file));
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setPhotoFiles(files);
+    setPhotoPreviews(files.map((file) => URL.createObjectURL(file)));
+    setGalleryIndex(0);
   }
 
   function handleMusicUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -83,6 +88,18 @@ export default function Home() {
         console.log("Müzik otomatik başlatılamadı.");
       });
     }, 500);
+  }
+
+  function nextPhoto() {
+    if (photoPreviews.length <= 1) return;
+    setGalleryIndex((current) => (current + 1) % photoPreviews.length);
+  }
+
+  function previousPhoto() {
+    if (photoPreviews.length <= 1) return;
+    setGalleryIndex((current) =>
+      current === 0 ? photoPreviews.length - 1 : current - 1
+    );
   }
 
   async function uploadPhoto(file: File) {
@@ -132,21 +149,34 @@ export default function Home() {
       setSaving(true);
       setCopied(false);
 
-      let photoUrl = "";
+      let photoUrls: string[] = [];
       let musicUrl = "";
 
-      if (photoFile) photoUrl = await uploadPhoto(photoFile);
+      if (photoFiles.length > 0) {
+        photoUrls = await Promise.all(photoFiles.map((file) => uploadPhoto(file)));
+      }
+
       if (musicType === "upload" && musicFile) {
         musicUrl = await uploadMusicDirectlyToCloudinary(musicFile);
       }
-      if (musicType === "named") musicUrl = selectedSong;
+
+      if (musicType === "named") {
+        musicUrl = selectedSong;
+      }
 
       const response = await fetch("/api/cards", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, message, photoUrl, musicUrl, theme }),
+        body: JSON.stringify({
+          name,
+          message,
+          photoUrl: photoUrls[0] || "",
+          photoUrls,
+          musicUrl,
+          theme,
+        }),
       });
 
       const data = await response.json();
@@ -174,26 +204,58 @@ export default function Home() {
 
   if (blown) {
     return (
-      <main className={`min-h-screen flex items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}>
+      <main
+        className={`min-h-screen flex items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}
+      >
         <Confetti />
         {musicSource && <audio ref={audioRef} src={musicSource} />}
 
-        <section className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} shadow-2xl border p-8 text-center`}>
+        <section
+          className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} shadow-2xl border p-8 text-center`}
+        >
           <div className="text-7xl mb-4">{selectedTheme.icon}</div>
 
-          {photo && (
-            <img
-              src={photo}
-              alt="Yüklenen fotoğraf"
-              className="w-52 h-52 object-cover rounded-full border-4 border-white shadow-xl mx-auto mb-6"
-            />
+          {photoPreviews.length > 0 && (
+            <div className="mb-6">
+              <img
+                src={photoPreviews[galleryIndex]}
+                alt="Yüklenen fotoğraf"
+                className="w-56 h-56 object-cover rounded-full border-4 border-white shadow-xl mx-auto"
+              />
+
+              {photoPreviews.length > 1 && (
+                <div className="flex items-center justify-center gap-3 mt-4">
+                  <button
+                    onClick={previousPhoto}
+                    className={`${selectedTheme.button} text-white px-4 py-2 rounded-xl font-bold`}
+                  >
+                    ←
+                  </button>
+
+                  <span className={`font-bold ${selectedTheme.text}`}>
+                    {galleryIndex + 1} / {photoPreviews.length}
+                  </span>
+
+                  <button
+                    onClick={nextPhoto}
+                    className={`${selectedTheme.button} text-white px-4 py-2 rounded-xl font-bold`}
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+            </div>
           )}
 
-          <h1 className={`text-4xl md:text-5xl font-extrabold mb-4 ${selectedTheme.title}`}>
+          <h1
+            className={`text-4xl md:text-5xl font-extrabold mb-4 ${selectedTheme.title}`}
+          >
             İyi Ki Doğdun {name || "Arkadaşım"}! 🎉
           </h1>
 
-          <p className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}>
+          <p
+            className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}
+          >
             {message || "Mutlu yıllar!"}
           </p>
 
@@ -299,21 +361,32 @@ export default function Home() {
             </div>
 
             <label className="block bg-white border border-rose-200 rounded-2xl p-4 cursor-pointer text-gray-900">
-              <p className="font-bold text-gray-900 mb-2">📸 Fotoğraf seç</p>
+              <p className="font-bold text-gray-900 mb-2">
+                📸 Fotoğrafları seç
+              </p>
               <input
                 type="file"
                 accept="image/*"
+                multiple
                 onChange={handlePhotoUpload}
                 className="w-full text-sm text-gray-800"
               />
+              <p className="text-xs text-gray-500 mt-2">
+                Birden fazla fotoğraf seçebilirsin.
+              </p>
             </label>
 
-            {photo && (
-              <img
-                src={photo}
-                alt="Ön izleme"
-                className="w-28 h-28 object-cover rounded-2xl shadow-md mx-auto"
-              />
+            {photoPreviews.length > 0 && (
+              <div className="grid grid-cols-4 gap-2">
+                {photoPreviews.map((preview, index) => (
+                  <img
+                    key={preview}
+                    src={preview}
+                    alt={`Ön izleme ${index + 1}`}
+                    className="w-full h-20 object-cover rounded-xl shadow"
+                  />
+                ))}
+              </div>
             )}
 
             <div className="bg-white border border-rose-200 p-4 rounded-2xl text-gray-900">

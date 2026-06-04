@@ -29,6 +29,7 @@ export default async function CardPage({ params }: PageProps) {
       name={card.name || ""}
       message={card.message || ""}
       photoUrl={card.photoUrl || ""}
+      photoUrls={card.photoUrls || []}
       musicUrl={card.musicUrl || ""}
       theme={card.theme || "pink"}
     />

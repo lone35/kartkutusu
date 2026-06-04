@@ -7,6 +7,7 @@ type CardViewProps = {
   name: string;
   message: string;
   photoUrl: string;
+  photoUrls: string[];
   musicUrl: string;
   theme: string;
 };
@@ -19,6 +20,7 @@ const themes = {
     button: "bg-rose-500",
     icon: "🎂",
     name: "Romantik Pembe",
+    text: "text-gray-700",
   },
   blue: {
     bg: "bg-gradient-to-br from-sky-200 via-blue-100 to-indigo-200",
@@ -27,6 +29,7 @@ const themes = {
     button: "bg-blue-500",
     icon: "💙",
     name: "Mavi Sürpriz",
+    text: "text-gray-700",
   },
   gold: {
     bg: "bg-gradient-to-br from-yellow-200 via-amber-100 to-orange-200",
@@ -35,6 +38,7 @@ const themes = {
     button: "bg-amber-500",
     icon: "👑",
     name: "Altın Lüks",
+    text: "text-gray-700",
   },
   dark: {
     bg: "bg-gradient-to-br from-gray-950 via-purple-950 to-black",
@@ -43,6 +47,7 @@ const themes = {
     button: "bg-yellow-500 text-black",
     icon: "🖤",
     name: "Siyah Premium",
+    text: "text-gray-100",
   },
 };
 
@@ -50,14 +55,23 @@ export default function CardView({
   name,
   message,
   photoUrl,
+  photoUrls,
   musicUrl,
   theme,
 }: CardViewProps) {
   const [started, setStarted] = useState(false);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const selectedTheme = themes[theme as keyof typeof themes] || themes.pink;
   const isDark = theme === "dark";
+
+  const galleryPhotos =
+    photoUrls && photoUrls.length > 0
+      ? photoUrls
+      : photoUrl
+      ? [photoUrl]
+      : [];
 
   function startCard() {
     setStarted(true);
@@ -67,6 +81,18 @@ export default function CardView({
         console.log("Müzik başlatılamadı.");
       });
     }, 300);
+  }
+
+  function nextPhoto() {
+    if (galleryPhotos.length <= 1) return;
+    setCurrentPhotoIndex((current) => (current + 1) % galleryPhotos.length);
+  }
+
+  function previousPhoto() {
+    if (galleryPhotos.length <= 1) return;
+    setCurrentPhotoIndex((current) =>
+      current === 0 ? galleryPhotos.length - 1 : current - 1
+    );
   }
 
   if (!started) {
@@ -101,7 +127,7 @@ export default function CardView({
 
           <button
             onClick={startCard}
-            className={`${selectedTheme.button} text-white px-8 py-4 rounded-2xl text-xl font-bold shadow-lg hover:scale-105 transition`}
+            className={`${selectedTheme.button} px-8 py-4 rounded-2xl text-xl font-bold shadow-lg hover:scale-105 transition`}
           >
             Mumları Üfle 🎂
           </button>
@@ -127,12 +153,38 @@ export default function CardView({
       >
         <div className="text-7xl mb-4">🎉</div>
 
-        {photoUrl && (
-          <img
-            src={photoUrl}
-            alt="Kart fotoğrafı"
-            className="w-56 h-56 object-cover rounded-full border-4 border-white shadow-xl mx-auto mb-6"
-          />
+        {galleryPhotos.length > 0 && (
+          <div className="mb-6">
+            <img
+              src={galleryPhotos[currentPhotoIndex]}
+              alt="Kart fotoğrafı"
+              className="w-56 h-56 object-cover rounded-full border-4 border-white shadow-xl mx-auto"
+            />
+
+            {galleryPhotos.length > 1 && (
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <button
+                  onClick={previousPhoto}
+                  className={`${selectedTheme.button} px-4 py-2 rounded-xl font-bold shadow`}
+                >
+                  ←
+                </button>
+
+                <span
+                  className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}
+                >
+                  {currentPhotoIndex + 1} / {galleryPhotos.length}
+                </span>
+
+                <button
+                  onClick={nextPhoto}
+                  className={`${selectedTheme.button} px-4 py-2 rounded-xl font-bold shadow`}
+                >
+                  →
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
         <h1
@@ -142,9 +194,7 @@ export default function CardView({
         </h1>
 
         <p
-          className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${
-            isDark ? "text-gray-100" : "text-gray-700"
-          }`}
+          className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}
         >
           {message || "Mutlu yıllar!"}
         </p>
