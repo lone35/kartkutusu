@@ -1,39 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Confetti from "react-confetti";
 
 export default function Home() {
   const [blown, setBlown] = useState(false);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState<string | null>(null);
+  const [musicType, setMusicType] = useState<"named" | "upload">("named");
+  const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
+  const [uploadedSong, setUploadedSong] = useState<string | null>(null);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    const photoUrl = URL.createObjectURL(file);
-    setPhoto(photoUrl);
+    setPhoto(URL.createObjectURL(file));
   }
+
+  function handleMusicUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadedSong(URL.createObjectURL(file));
+  }
+
+  function startCard() {
+    setBlown(true);
+
+    setTimeout(() => {
+      audioRef.current?.play().catch(() => {
+        console.log("Müzik otomatik başlatılamadı.");
+      });
+    }, 500);
+  }
+
+  const musicSource = musicType === "named" ? selectedSong : uploadedSong;
 
   if (blown) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center bg-pink-100 p-6">
+      <main className="min-h-screen flex flex-col items-center justify-center bg-pink-100 p-6 overflow-hidden relative">
+        <Confetti />
+
+        {musicSource && <audio ref={audioRef} src={musicSource} />}
+
         {photo && (
           <img
             src={photo}
             alt="Yüklenen fotoğraf"
-            className="w-48 h-48 object-cover rounded-full border-4 border-white shadow-xl mb-6"
+            className="w-48 h-48 object-cover rounded-full border-4 border-white shadow-xl mb-6 z-10"
           />
         )}
 
-        <h1 className="text-5xl font-bold mb-4 text-center">
+        <h1 className="text-5xl font-bold mb-4 text-center z-10">
           🎉 İyi Ki Doğdun {name || "Arkadaşım"}!
         </h1>
 
-        <p className="text-xl text-center max-w-xl">
+        <p className="text-xl text-center max-w-xl z-10">
           {message || "Mutlu yıllar!"}
         </p>
+
+        <button
+          onClick={() => setBlown(false)}
+          className="mt-8 bg-white text-red-500 px-5 py-2 rounded-xl shadow z-10"
+        >
+          Geri Dön
+        </button>
       </main>
     );
   }
@@ -76,8 +109,51 @@ export default function Home() {
         />
       )}
 
+      <div className="bg-white p-4 rounded-xl shadow w-full max-w-md mb-4">
+        <h2 className="font-bold mb-3">Müzik Seçimi</h2>
+
+        <label className="block mb-2">
+          <input
+            type="radio"
+            checked={musicType === "named"}
+            onChange={() => setMusicType("named")}
+          />{" "}
+          İsme özel şarkı seç
+        </label>
+
+        {musicType === "named" && (
+          <select
+            value={selectedSong}
+            onChange={(e) => setSelectedSong(e.target.value)}
+            className="border p-3 rounded-lg w-full mb-3"
+          >
+            <option value="/music/senem.mp3">Senem için şarkı</option>
+            <option value="/music/ayse.mp3">Ayşe için şarkı</option>
+            <option value="/music/zeynep.mp3">Zeynep için şarkı</option>
+          </select>
+        )}
+
+        <label className="block mb-2">
+          <input
+            type="radio"
+            checked={musicType === "upload"}
+            onChange={() => setMusicType("upload")}
+          />{" "}
+          Kendi şarkını yükle
+        </label>
+
+        {musicType === "upload" && (
+          <input
+            type="file"
+            accept="audio/*"
+            onChange={handleMusicUpload}
+            className="w-full bg-pink-50 p-3 rounded-lg"
+          />
+        )}
+      </div>
+
       <button
-        onClick={() => setBlown(true)}
+        onClick={startCard}
         className="bg-red-500 text-white px-6 py-3 rounded-xl text-xl"
       >
         Mumları Üfle
