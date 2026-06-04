@@ -9,9 +9,12 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
+
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
   const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
+  const [musicFile, setMusicFile] = useState<File | null>(null);
+
   const [cardLink, setCardLink] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -28,6 +31,8 @@ export default function Home() {
   function handleMusicUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setMusicFile(file);
     setUploadedSong(URL.createObjectURL(file));
   }
 
@@ -41,11 +46,9 @@ export default function Home() {
     }, 500);
   }
 
-  async function uploadPhotoToCloudinary() {
-    if (!photoFile) return "";
-
+  async function uploadFile(file: File) {
     const formData = new FormData();
-    formData.append("file", photoFile);
+    formData.append("file", file);
 
     const response = await fetch("/api/upload", {
       method: "POST",
@@ -55,7 +58,7 @@ export default function Home() {
     const data = await response.json();
 
     if (!data.success) {
-      throw new Error("Fotoğraf yüklenemedi");
+      throw new Error("Dosya yüklenemedi");
     }
 
     return data.url;
@@ -65,14 +68,27 @@ export default function Home() {
     try {
       setSaving(true);
 
-      const photoUrl = await uploadPhotoToCloudinary();
+      let photoUrl = "";
+      let musicUrl = "";
+
+      if (photoFile) {
+        photoUrl = await uploadFile(photoFile);
+      }
+
+      if (musicType === "upload" && musicFile) {
+        musicUrl = await uploadFile(musicFile);
+      }
+
+      if (musicType === "named") {
+        musicUrl = selectedSong;
+      }
 
       const response = await fetch("/api/cards", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, message, photoUrl }),
+        body: JSON.stringify({ name, message, photoUrl, musicUrl }),
       });
 
       const data = await response.json();

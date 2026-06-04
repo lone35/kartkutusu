@@ -17,6 +17,7 @@ export async function POST(req: Request) {
       name: body.name || "",
       message: body.message || "",
       photoUrl: body.photoUrl || "",
+      musicUrl: body.musicUrl || "",
       createdAt: new Date(),
     });
 

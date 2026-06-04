@@ -25,6 +25,12 @@ export default async function CardPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-pink-100 p-6">
+      {card.musicUrl && (
+        <audio controls autoPlay className="mb-6">
+          <source src={card.musicUrl} />
+        </audio>
+      )}
+
       {card.photoUrl && (
         <img
           src={card.photoUrl}

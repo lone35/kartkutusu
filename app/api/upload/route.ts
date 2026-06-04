@@ -20,8 +20,8 @@ export async function POST(req: Request) {
       cloudinary.uploader
         .upload_stream(
           {
-            folder: "kartkutusu/photos",
-            resource_type: "image",
+            folder: "kartkutusu/uploads",
+            resource_type: "auto",
           },
           (error, result) => {
             if (error) reject(error);
