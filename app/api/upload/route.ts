@@ -16,12 +16,15 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    const isAudio = file.type.startsWith("audio/");
+    const isImage = file.type.startsWith("image/");
+
     const result = await new Promise<any>((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
-            folder: "kartkutusu/uploads",
-            resource_type: "auto",
+            folder: isAudio ? "kartkutusu/music" : "kartkutusu/photos",
+            resource_type: isAudio ? "video" : isImage ? "image" : "auto",
           },
           (error, result) => {
             if (error) reject(error);
@@ -36,7 +39,7 @@ export async function POST(req: Request) {
       url: result.secure_url,
     });
   } catch (error) {
-    console.error(error);
+    console.error("UPLOAD_ERROR:", error);
 
     return NextResponse.json(
       { success: false, message: "Yükleme hatası" },
