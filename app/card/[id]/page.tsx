@@ -8,6 +8,9 @@ type PageProps = {
   }>;
 };
 
+const SITE_URL = "https://kartkutusu.vercel.app";
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 const templateTitles: Record<string, string> = {
   birthday: "Doğum Günü Kartı",
   love: "Sevgiliye Özel Kart",
@@ -25,7 +28,6 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { id } = await params;
-
   const db = await connectDB();
 
   const card = await db.collection("cards").findOne({
@@ -35,7 +37,6 @@ export async function generateMetadata({
   const name = card?.name || "Senin";
   const template = card?.template || "birthday";
   const templateTitle = templateTitles[template] || "Sürpriz Kart";
-  const imageUrl = card?.photoUrl || "/logo.svg";
 
   const title = `${name} için ${templateTitle} | KartKutusu`;
   const description =
@@ -47,14 +48,14 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://kartkutusu.vercel.app/card/${id}`,
+      url: `${SITE_URL}/card/${id}`,
       siteName: "KartKutusu",
       images: [
         {
-          url: imageUrl,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: "KartKutusu",
         },
       ],
       locale: "tr_TR",
@@ -64,7 +65,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [OG_IMAGE],
     },
   };
 }
