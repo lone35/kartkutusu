@@ -478,21 +478,23 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-pink-200 via-rose-100 to-purple-200 p-5">
       <section className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-start min-h-screen py-8">
         <div className="text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 bg-white border border-rose-100 rounded-full px-4 py-2 shadow mb-5">
-            <span>🎁</span>
-            <span className="text-sm font-semibold text-rose-700">
-              Fotoğraflı, müzikli, kişiye özel kart
-            </span>
+          <div className="mb-8 flex justify-center lg:justify-start">
+            <img
+              src="/logo.svg"
+              alt="KartKutusu"
+              className="h-28 w-auto"
+            />
           </div>
 
           <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-5">
-            Sevdiklerine unutulmaz bir{" "}
-            <span className="text-rose-600">özel gün sürprizi</span> hazırla.
+            Fotoğrafını ekle,{" "}
+            <span className="text-rose-600">müziğini seç,</span>{" "}
+            sürprizini paylaş.
           </h1>
 
           <p className="text-lg text-gray-800 mb-8 max-w-xl mx-auto lg:mx-0">
-            Kart türünü seç, fotoğrafını, mesajını ve müziğini ekle.
-            KartKutusu senin için özel bir kutlama linki oluştursun.
+            Doğum günü, sevgiliye özel, yılbaşı, anneler günü ve daha fazlası
+            için dakikalar içinde kişiye özel müzikli kart oluştur.
           </p>
 
           <div className="grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
@@ -551,7 +553,14 @@ export default function Home() {
 
         <div className="bg-white rounded-3xl shadow-2xl border border-rose-100 p-6 md:p-8">
           <div className="text-center mb-6">
-            <div className="text-7xl mb-3">{selectedTemplate.emoji}</div>
+            <div className="flex justify-center mb-3">
+              <img
+                src="/logo.svg"
+                alt="KartKutusu"
+                className="h-24 w-auto"
+              />
+            </div>
+
             <h2 className="text-3xl font-extrabold text-gray-900">
               Kartını Oluştur
             </h2>
