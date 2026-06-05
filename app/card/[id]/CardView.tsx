@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Confetti from "react-confetti";
+import { toPng } from "html-to-image";
 
 type CardViewProps = {
   name: string;
@@ -61,7 +62,10 @@ export default function CardView({
 }: CardViewProps) {
   const [started, setStarted] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [downloading, setDownloading] = useState(false);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const selectedTheme = themes[theme as keyof typeof themes] || themes.pink;
   const isDark = theme === "dark";
@@ -93,6 +97,30 @@ export default function CardView({
     setCurrentPhotoIndex((current) =>
       current === 0 ? galleryPhotos.length - 1 : current - 1
     );
+  }
+
+  async function downloadPng() {
+    if (!cardRef.current) return;
+
+    try {
+      setDownloading(true);
+
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: isDark ? "#111827" : "#ffffff",
+      });
+
+      const link = document.createElement("a");
+      link.download = `kart-${name || "kutusu"}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (error) {
+      console.error("PNG indirme hatası:", error);
+      alert("PNG indirilemedi. Farklı bir tarayıcıda tekrar dene kankam.");
+    } finally {
+      setDownloading(false);
+    }
   }
 
   if (!started) {
@@ -138,7 +166,7 @@ export default function CardView({
 
   return (
     <main
-      className={`min-h-screen flex items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}
+      className={`min-h-screen flex flex-col items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}
     >
       <Confetti />
 
@@ -149,6 +177,7 @@ export default function CardView({
       )}
 
       <section
+        ref={cardRef}
         className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} backdrop-blur-xl shadow-2xl border p-8 text-center`}
       >
         <div className="text-7xl mb-4">🎉</div>
@@ -158,6 +187,7 @@ export default function CardView({
             <img
               src={galleryPhotos[currentPhotoIndex]}
               alt="Kart fotoğrafı"
+              crossOrigin="anonymous"
               className="w-56 h-56 object-cover rounded-full border-4 border-white shadow-xl mx-auto"
             />
 
@@ -171,7 +201,9 @@ export default function CardView({
                 </button>
 
                 <span
-                  className={`font-bold ${isDark ? "text-white" : "text-gray-800"}`}
+                  className={`font-bold ${
+                    isDark ? "text-white" : "text-gray-800"
+                  }`}
                 >
                   {currentPhotoIndex + 1} / {galleryPhotos.length}
                 </span>
@@ -198,7 +230,23 @@ export default function CardView({
         >
           {message || "Mutlu yıllar!"}
         </p>
+
+        <p
+          className={`text-xs mt-6 ${
+            isDark ? "text-gray-300" : "text-gray-500"
+          }`}
+        >
+          KartKutusu ile hazırlandı 🎂
+        </p>
       </section>
+
+      <button
+        onClick={downloadPng}
+        disabled={downloading}
+        className="relative z-10 mt-5 bg-gray-900 text-white px-6 py-3 rounded-2xl font-bold shadow-lg disabled:opacity-50"
+      >
+        {downloading ? "Hazırlanıyor..." : "PNG Olarak İndir 📥"}
+      </button>
     </main>
   );
 }
