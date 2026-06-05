@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,8 +13,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const GA_ID = "G-G6B0PE07ZC";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kartkutusu.vercel.app"),
+  metadataBase: new URL("https://kartkutusu.com"),
 
   title: "KartKutusu | Fotoğraflı ve Müzikli Sürpriz Kartlar",
 
@@ -28,7 +31,7 @@ export const metadata: Metadata = {
     title: "KartKutusu",
     description:
       "Fotoğraflı ve müzikli kişiye özel sürpriz kartlar oluştur.",
-    url: "https://kartkutusu.vercel.app",
+    url: "https://kartkutusu.com",
     siteName: "KartKutusu",
     images: [
       {
@@ -61,7 +64,23 @@ export default function RootLayout({
       lang="tr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+
+        {children}
+      </body>
     </html>
   );
 }
