@@ -498,15 +498,53 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
             <div className="bg-white rounded-2xl p-4 shadow text-center">
               <div className="text-3xl mb-1">📸</div>
-              <p className="text-sm font-semibold text-gray-900">Fotoğraf</p>
+              <p className="text-sm font-semibold text-gray-900">Çoklu Fotoğraf</p>
             </div>
             <div className="bg-white rounded-2xl p-4 shadow text-center">
               <div className="text-3xl mb-1">🎵</div>
-              <p className="text-sm font-semibold text-gray-900">Müzik</p>
+              <p className="text-sm font-semibold text-gray-900">Kendi Müziğin</p>
             </div>
             <div className="bg-white rounded-2xl p-4 shadow text-center">
               <div className="text-3xl mb-1">🔗</div>
-              <p className="text-sm font-semibold text-gray-900">Link</p>
+              <p className="text-sm font-semibold text-gray-900">Tek Tık Paylaşım</p>
+            </div>
+          </div>
+
+          <div className="mt-8 grid sm:grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
+            <div className="bg-white/90 rounded-2xl p-4 shadow text-center border border-rose-100">
+              <p className="text-sm font-bold text-gray-900">✅ 10 Kart Türü</p>
+            </div>
+
+            <div className="bg-white/90 rounded-2xl p-4 shadow text-center border border-rose-100">
+              <p className="text-sm font-bold text-gray-900">✅ 4 Özel Tema</p>
+            </div>
+
+            <div className="bg-white/90 rounded-2xl p-4 shadow text-center border border-rose-100">
+              <p className="text-sm font-bold text-gray-900">✅ Çoklu Fotoğraf</p>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-white/90 rounded-3xl shadow-xl p-5 max-w-md mx-auto lg:mx-0 border border-rose-100">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="text-4xl">🎂</div>
+              <div>
+                <p className="text-xs font-bold text-rose-600 uppercase tracking-wide">
+                  Örnek Kart
+                </p>
+                <p className="text-sm font-semibold text-gray-500">
+                  Hande için hazırlandı
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 p-4 border border-rose-100">
+              <h4 className="text-xl md:text-2xl font-extrabold text-rose-600 mb-2">
+                İyi Ki Doğdun Hande! 🎉
+              </h4>
+
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                Yeni yaşın sana sağlık, mutluluk ve başarı getirsin.
+              </p>
             </div>
           </div>
         </div>
@@ -697,7 +735,7 @@ export default function Home() {
                 disabled={saving}
                 className="bg-purple-600 text-white px-6 py-4 rounded-2xl text-lg font-bold shadow-lg disabled:opacity-50 hover:scale-[1.02] transition"
               >
-                {saving ? "Kaydediliyor..." : "Link Oluştur 🔗"}
+                {saving ? "Kaydediliyor..." : "🎁 Kartı Oluştur"}
               </button>
             </div>
 
