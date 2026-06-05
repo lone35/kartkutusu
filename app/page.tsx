@@ -49,6 +49,12 @@ const templates = {
     defaultMessage: "Mutlu yıllar!",
     shareText: "Senin için hazırladığım doğum günü kartı 🎂🎉",
     effects: ["🎉", "🎊", "✨", "🎈"],
+    messages: [
+      "Yeni yaşın sana sağlık, mutluluk ve başarı getirsin. İyi ki doğdun, iyi ki varsın!",
+      "Hayatının her günü bugünkü kadar neşeli, umutlu ve güzel olsun. Nice mutlu yıllara!",
+      "Yeni yaşında tüm dileklerinin gerçekleşmesini dilerim. Mutlu yıllar!",
+      "Gülümsemen hiç eksilmesin, kalbin hep mutlulukla dolsun. Doğum günün kutlu olsun!",
+    ],
   },
   love: {
     label: "Sevgiliye Özel",
@@ -57,6 +63,12 @@ const templates = {
     defaultMessage: "Kalbim hep seninle...",
     shareText: "Senin için romantik bir sürpriz hazırladım ❤️",
     effects: ["❤️", "💖", "💕", "💘"],
+    messages: [
+      "Sen hayatımın en güzel tesadüfü, kalbimin en özel yerisin. İyi ki varsın sevgilim.",
+      "Her anımda aklımda, her duamda kalbimdesin. Seni çok seviyorum.",
+      "Seninle geçen her gün, hayatımın en güzel hediyesi gibi. İyi ki benimlesin.",
+      "Kalbimin en güzel cümlesi sensin. Seni bugün de, yarın da, her zaman çok seveceğim.",
+    ],
   },
   proposal: {
     label: "Evlilik Teklifi",
@@ -65,6 +77,12 @@ const templates = {
     defaultMessage: "Bir ömür benimle olur musun?",
     shareText: "Senin için çok özel bir sürpriz hazırladım 💍",
     effects: ["💍", "❤️", "✨", "💖"],
+    messages: [
+      "Hayatımın geri kalanında her sabaha seninle uyanmak istiyorum. Benimle evlenir misin?",
+      "Seninle bir ömür aynı yolda yürümek, aynı hayalleri paylaşmak istiyorum. Benimle evlenir misin?",
+      "Kalbim seni seçti, hayatım seninle tamamlandı. Bir ömür benimle olur musun?",
+      "En güzel hikâyemizin bugün başlamasını istiyorum. Benimle evlenir misin?",
+    ],
   },
   baby: {
     label: "Yeni Bebek",
@@ -73,6 +91,12 @@ const templates = {
     defaultMessage: "Ailemize mutluluk getirdin...",
     shareText: "Senin için özel bir yeni bebek kartı hazırladım 👶",
     effects: ["👶", "⭐", "🍼", "🎈"],
+    messages: [
+      "Hoş geldin minik mucize. Hayatımıza sevgi, neşe ve umut getirdin.",
+      "Küçücük ellerinle kocaman mutluluklar getirdin. Hoş geldin güzel bebek.",
+      "Ailemize katıldığın ilk günden beri her şey daha güzel. Hoş geldin minik kalp.",
+      "Sağlıkla, mutlulukla, sevgiyle büyümen dileğiyle. Hoş geldin minik mucize.",
+    ],
   },
   graduation: {
     label: "Mezuniyet",
@@ -81,6 +105,12 @@ const templates = {
     defaultMessage: "Yeni yolun başarılarla dolu olsun.",
     shareText: "Senin için mezuniyet sürprizi hazırladım 🎓",
     effects: ["🎓", "🎉", "⭐", "✨"],
+    messages: [
+      "Emeklerinin karşılığını aldığın bu özel günde seninle gurur duyuyoruz. Yolun açık olsun!",
+      "Başarın daim, yolun aydınlık olsun. Mezuniyetin kutlu olsun!",
+      "Bugün bir son değil, yepyeni bir başlangıç. Hayallerinin peşinden cesaretle git.",
+      "Azmin, emeğin ve başarın hepimize ilham oldu. Mezuniyetin kutlu olsun!",
+    ],
   },
   newyear: {
     label: "Yılbaşı",
@@ -89,6 +119,12 @@ const templates = {
     defaultMessage: "Yeni yıl sana sağlık, mutluluk ve huzur getirsin.",
     shareText: "Senin için yılbaşı kartı hazırladım 🎄",
     effects: ["❄️", "🎄", "✨", "☃️"],
+    messages: [
+      "Yeni yıl sana sağlık, huzur, mutluluk ve bolca güzel anı getirsin. Mutlu yıllar!",
+      "Yeni yılda tüm dileklerinin gerçekleşmesini dilerim. Umut dolu bir yıl olsun!",
+      "Geçmişin yorgunluğu geride kalsın, yeni yıl kalbine güzellikler getirsin.",
+      "Yeni yılın her günü neşe, sevgi ve başarıyla dolu olsun. Mutlu yıllar!",
+    ],
   },
   mothersday: {
     label: "Anneler Günü",
@@ -97,6 +133,12 @@ const templates = {
     defaultMessage: "İyi ki varsın canım annem.",
     shareText: "Senin için Anneler Günü kartı hazırladım 👩",
     effects: ["🌹", "💐", "❤️", "🌸"],
+    messages: [
+      "İyi ki varsın canım annem. Sevgin, emeğin ve şefkatin için sonsuz teşekkür ederim.",
+      "Dünyanın en güzel kalbine sahip annem, Anneler Günün kutlu olsun.",
+      "Her zaman yanımda olduğun, beni koşulsuz sevdiğin için teşekkür ederim annem.",
+      "Sen benim en güvenli limanım, en güzel şansımsın. Anneler Günün kutlu olsun.",
+    ],
   },
   fathersday: {
     label: "Babalar Günü",
@@ -105,6 +147,12 @@ const templates = {
     defaultMessage: "Her zaman yanımda olduğun için teşekkür ederim.",
     shareText: "Senin için Babalar Günü kartı hazırladım 👨",
     effects: ["⭐", "🏆", "💙", "✨"],
+    messages: [
+      "Her zaman yanımda olduğun, bana güç verdiğin için teşekkür ederim. Babalar Günün kutlu olsun.",
+      "Canım babam, emeğin, sevgin ve desteğin için minnettarım. İyi ki varsın.",
+      "Sen benim kahramanım, yol gösterenim ve en büyük destekçimsin. Babalar Günün kutlu olsun.",
+      "Hayatımdaki en güçlü omuz, en güvenli liman sensin babam. İyi ki varsın.",
+    ],
   },
   womensday: {
     label: "Kadınlar Günü",
@@ -113,6 +161,12 @@ const templates = {
     defaultMessage: "Gücün, emeğin ve güzelliğin kutlu olsun.",
     shareText: "Senin için Kadınlar Günü kartı hazırladım 💐",
     effects: ["💐", "🌸", "🌷", "✨"],
+    messages: [
+      "Gücün, emeğin, zarafetin ve güzelliğin kutlu olsun. Kadınlar Günün kutlu olsun!",
+      "Hayata kattığın sevgi, emek ve umut için teşekkür ederim. Kadınlar Günün kutlu olsun.",
+      "Her zaman güçlü, özgür ve mutlu olman dileğiyle. Kadınlar Günün kutlu olsun.",
+      "Dünyayı güzelleştiren tüm emeklerin ve sevgin için iyi ki varsın.",
+    ],
   },
   teachersday: {
     label: "Öğretmenler Günü",
@@ -121,6 +175,12 @@ const templates = {
     defaultMessage: "Emeğiniz ve ışığınız için teşekkür ederiz.",
     shareText: "Senin için Öğretmenler Günü kartı hazırladım 🎖️",
     effects: ["🎖️", "⭐", "📚", "✨"],
+    messages: [
+      "Bilginiz, emeğiniz ve sabrınız için teşekkür ederiz. Öğretmenler Gününüz kutlu olsun.",
+      "Hayatımıza ışık tuttuğunuz, yolumuzu aydınlattığınız için minnettarız.",
+      "Bir öğrencinin kalbine dokunmak en büyük emektir. Öğretmenler Gününüz kutlu olsun.",
+      "Öğrettikleriniz sadece derslerde değil, hayatımızda da yol gösteriyor. Teşekkür ederiz.",
+    ],
   },
 };
 
@@ -239,6 +299,10 @@ export default function Home() {
     setGalleryIndex((current) =>
       current === 0 ? photoPreviews.length - 1 : current - 1
     );
+  }
+
+  function selectReadyMessage(text: string) {
+    setMessage(text);
   }
 
   async function uploadPhoto(file: File) {
@@ -487,6 +551,33 @@ export default function Home() {
               onChange={(e) => setName(e.target.value)}
               className="border border-rose-200 bg-white p-4 rounded-2xl w-full outline-none focus:ring-2 focus:ring-rose-300 text-gray-900 placeholder:text-gray-500"
             />
+
+            <div className="bg-white border border-rose-200 p-4 rounded-2xl text-gray-900">
+              <h3 className="font-bold mb-3 text-gray-900">
+                📝 Hazır Mesaj Seç
+              </h3>
+
+              <div className="grid gap-2">
+                {selectedTemplate.messages.map((readyMessage, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => selectReadyMessage(readyMessage)}
+                    className={`text-left rounded-2xl border p-3 text-sm leading-relaxed transition ${
+                      message === readyMessage
+                        ? "border-rose-600 bg-rose-50 text-rose-700"
+                        : "border-rose-200 bg-white text-gray-800"
+                    }`}
+                  >
+                    {readyMessage}
+                  </button>
+                ))}
+              </div>
+
+              <p className="text-xs text-gray-500 mt-3">
+                Hazır mesaj seçebilir veya aşağıdaki alana kendi mesajını yazabilirsin.
+              </p>
+            </div>
 
             <textarea
               placeholder="Mesajını yaz..."
