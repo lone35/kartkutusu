@@ -476,7 +476,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-pink-200 via-rose-100 to-purple-200 p-5">
-      <section className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-center min-h-screen py-8">
+      <section className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-start min-h-screen py-8">
         <div className="text-center lg:text-left">
           <div className="inline-flex items-center gap-2 bg-white border border-rose-100 rounded-full px-4 py-2 shadow mb-5">
             <span>🎁</span>
