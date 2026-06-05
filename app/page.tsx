@@ -42,6 +42,79 @@ const themes = {
   },
 };
 
+const templates = {
+  birthday: {
+    label: "Doğum Günü",
+    emoji: "🎂",
+    title: "İyi Ki Doğdun",
+    defaultMessage: "Mutlu yıllar!",
+    shareText: "Senin için hazırladığım doğum günü kartı 🎂🎉",
+  },
+  love: {
+    label: "Sevgiliye Özel",
+    emoji: "❤️",
+    title: "Seni Çok Seviyorum",
+    defaultMessage: "Kalbim hep seninle...",
+    shareText: "Senin için romantik bir sürpriz hazırladım ❤️",
+  },
+  proposal: {
+    label: "Evlilik Teklifi",
+    emoji: "💍",
+    title: "Benimle Evlenir misin?",
+    defaultMessage: "Bir ömür benimle olur musun?",
+    shareText: "Senin için çok özel bir sürpriz hazırladım 💍",
+  },
+  baby: {
+    label: "Yeni Bebek",
+    emoji: "👶",
+    title: "Hoş Geldin Minik Mucize",
+    defaultMessage: "Ailemize mutluluk getirdin...",
+    shareText: "Senin için özel bir yeni bebek kartı hazırladım 👶",
+  },
+  graduation: {
+    label: "Mezuniyet",
+    emoji: "🎓",
+    title: "Başarınla Gurur Duyuyoruz",
+    defaultMessage: "Yeni yolun başarılarla dolu olsun.",
+    shareText: "Senin için mezuniyet sürprizi hazırladım 🎓",
+  },
+  newyear: {
+    label: "Yılbaşı",
+    emoji: "🎄",
+    title: "Mutlu Yıllar",
+    defaultMessage: "Yeni yıl sana sağlık, mutluluk ve huzur getirsin.",
+    shareText: "Senin için yılbaşı kartı hazırladım 🎄",
+  },
+  mothersday: {
+    label: "Anneler Günü",
+    emoji: "👩",
+    title: "Anneler Günün Kutlu Olsun",
+    defaultMessage: "İyi ki varsın canım annem.",
+    shareText: "Senin için Anneler Günü kartı hazırladım 👩",
+  },
+  fathersday: {
+    label: "Babalar Günü",
+    emoji: "👨",
+    title: "Babalar Günün Kutlu Olsun",
+    defaultMessage: "Her zaman yanımda olduğun için teşekkür ederim.",
+    shareText: "Senin için Babalar Günü kartı hazırladım 👨",
+  },
+  womensday: {
+    label: "Kadınlar Günü",
+    emoji: "💐",
+    title: "Kadınlar Günün Kutlu Olsun",
+    defaultMessage: "Gücün, emeğin ve güzelliğin kutlu olsun.",
+    shareText: "Senin için Kadınlar Günü kartı hazırladım 💐",
+  },
+  teachersday: {
+    label: "Öğretmenler Günü",
+    emoji: "🎖️",
+    title: "Öğretmenler Gününüz Kutlu Olsun",
+    defaultMessage: "Emeğiniz ve ışığınız için teşekkür ederiz.",
+    shareText: "Senin için Öğretmenler Günü kartı hazırladım 🎖️",
+  },
+};
+
 export default function Home() {
   const [blown, setBlown] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -58,12 +131,14 @@ export default function Home() {
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
   const [theme, setTheme] = useState<keyof typeof themes>("pink");
+  const [template, setTemplate] = useState<keyof typeof templates>("birthday");
   const [cardLink, setCardLink] = useState("");
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const selectedTheme = themes[theme];
+  const selectedTemplate = templates[template];
 
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);
@@ -176,6 +251,7 @@ export default function Home() {
           photoUrls,
           musicUrl,
           theme,
+          template,
         }),
       });
 
@@ -213,7 +289,7 @@ export default function Home() {
         <section
           className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} shadow-2xl border p-8 text-center`}
         >
-          <div className="text-7xl mb-4">{selectedTheme.icon}</div>
+          <div className="text-7xl mb-4">{selectedTemplate.emoji}</div>
 
           {photoPreviews.length > 0 && (
             <div className="mb-6">
@@ -250,13 +326,13 @@ export default function Home() {
           <h1
             className={`text-4xl md:text-5xl font-extrabold mb-4 ${selectedTheme.title}`}
           >
-            İyi Ki Doğdun {name || "Arkadaşım"}! 🎉
+            {selectedTemplate.title} {name || "Arkadaşım"}!
           </h1>
 
           <p
             className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}
           >
-            {message || "Mutlu yıllar!"}
+            {message || selectedTemplate.defaultMessage}
           </p>
 
           <button
@@ -283,12 +359,12 @@ export default function Home() {
 
           <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-5">
             Sevdiklerine unutulmaz bir{" "}
-            <span className="text-rose-600">doğum günü sürprizi</span> hazırla.
+            <span className="text-rose-600">özel gün sürprizi</span> hazırla.
           </h1>
 
           <p className="text-lg text-gray-800 mb-8 max-w-xl mx-auto lg:mx-0">
-            Fotoğrafını, mesajını ve müziğini ekle. KartKutusu senin için özel
-            bir kutlama linki oluştursun.
+            Kart türünü seç, fotoğrafını, mesajını ve müziğini ekle.
+            KartKutusu senin için özel bir kutlama linki oluştursun.
           </p>
 
           <div className="grid grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
@@ -309,7 +385,7 @@ export default function Home() {
 
         <div className="bg-white rounded-3xl shadow-2xl border border-rose-100 p-6 md:p-8">
           <div className="text-center mb-6">
-            <div className="text-7xl mb-3">🎂</div>
+            <div className="text-7xl mb-3">{selectedTemplate.emoji}</div>
             <h2 className="text-3xl font-extrabold text-gray-900">
               Kartını Oluştur
             </h2>
@@ -319,6 +395,27 @@ export default function Home() {
           </div>
 
           <div className="space-y-4">
+            <div className="bg-white border border-rose-200 p-4 rounded-2xl text-gray-900">
+              <h3 className="font-bold mb-3 text-gray-900">🎁 Kart Türü Seç</h3>
+
+              <div className="grid grid-cols-2 gap-3">
+                {Object.entries(templates).map(([value, item]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setTemplate(value as keyof typeof templates)}
+                    className={`rounded-2xl border p-3 text-sm font-bold transition ${
+                      template === value
+                        ? "border-rose-600 bg-rose-50 text-rose-700"
+                        : "border-rose-200 bg-white text-gray-800"
+                    }`}
+                  >
+                    {item.emoji} {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <input
               type="text"
               placeholder="Kimin için? Örn: Senem"
@@ -437,7 +534,7 @@ export default function Home() {
                 onClick={startCard}
                 className="bg-rose-500 text-white px-6 py-4 rounded-2xl text-lg font-bold shadow-lg hover:scale-[1.02] transition"
               >
-                Önizle 🎂
+                Önizle {selectedTemplate.emoji}
               </button>
 
               <button
@@ -473,8 +570,7 @@ export default function Home() {
 
                   <a
                     href={`https://wa.me/?text=${encodeURIComponent(
-                      "Senin için hazırladığım doğum günü kartı 🎂🎉\n\n" +
-                        cardLink
+                      selectedTemplate.shareText + "\n\n" + cardLink
                     )}`}
                     target="_blank"
                     className="bg-green-500 text-white px-5 py-3 rounded-xl font-bold"

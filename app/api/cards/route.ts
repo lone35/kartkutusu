@@ -20,6 +20,7 @@ export async function POST(req: Request) {
       photoUrls: body.photoUrls || [],
       musicUrl: body.musicUrl || "",
       theme: body.theme || "pink",
+      template: body.template || "birthday",
       createdAt: new Date(),
     });
 

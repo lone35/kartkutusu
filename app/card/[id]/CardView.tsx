@@ -11,6 +11,7 @@ type CardViewProps = {
   photoUrls: string[];
   musicUrl: string;
   theme: string;
+  template: string;
 };
 
 const themes = {
@@ -52,6 +53,99 @@ const themes = {
   },
 };
 
+const templates = {
+  birthday: {
+    label: "Doğum Günü",
+    icon: "🎂",
+    opening: "bu doğum günü kartı senin için hazırlandı",
+    title: "İyi Ki Doğdun",
+    footer: "KartKutusu ile doğum günü sürprizi hazırlandı 🎂",
+    button: "Mumları Üfle 🎂",
+    defaultMessage: "Mutlu yıllar!",
+  },
+  love: {
+    label: "Sevgiliye Özel",
+    icon: "❤️",
+    opening: "sana özel romantik bir sürpriz hazırlandı",
+    title: "Seni Çok Seviyorum",
+    footer: "KartKutusu ile sevgi dolu bir sürpriz hazırlandı ❤️",
+    button: "Sürprizi Aç ❤️",
+    defaultMessage: "Kalbim hep seninle...",
+  },
+  proposal: {
+    label: "Evlilik Teklifi",
+    icon: "💍",
+    opening: "sana hayatının en özel sorusu hazırlandı",
+    title: "Benimle Evlenir misin?",
+    footer: "KartKutusu ile unutulmaz bir teklif hazırlandı 💍",
+    button: "Sürprizi Aç 💍",
+    defaultMessage: "Bir ömür benimle olur musun?",
+  },
+  baby: {
+    label: "Yeni Bebek",
+    icon: "👶",
+    opening: "minik mucize için özel bir kart hazırlandı",
+    title: "Hoş Geldin Minik Mucize",
+    footer: "KartKutusu ile yeni bebek kutlaması hazırlandı 👶",
+    button: "Sürprizi Aç 👶",
+    defaultMessage: "Ailemize mutluluk getirdin...",
+  },
+  graduation: {
+    label: "Mezuniyet",
+    icon: "🎓",
+    opening: "başarını kutlamak için özel bir kart hazırlandı",
+    title: "Başarınla Gurur Duyuyoruz",
+    footer: "KartKutusu ile mezuniyet kutlaması hazırlandı 🎓",
+    button: "Sürprizi Aç 🎓",
+    defaultMessage: "Yeni yolun başarılarla dolu olsun.",
+  },
+  newyear: {
+    label: "Yılbaşı",
+    icon: "🎄",
+    opening: "yeni yıl için sana özel bir kart hazırlandı",
+    title: "Mutlu Yıllar",
+    footer: "KartKutusu ile yılbaşı sürprizi hazırlandı 🎄",
+    button: "Sürprizi Aç 🎄",
+    defaultMessage: "Yeni yıl sana sağlık, mutluluk ve huzur getirsin.",
+  },
+  mothersday: {
+    label: "Anneler Günü",
+    icon: "👩",
+    opening: "dünyanın en güzel annesine özel hazırlandı",
+    title: "Anneler Günün Kutlu Olsun",
+    footer: "KartKutusu ile Anneler Günü kartı hazırlandı 👩",
+    button: "Sürprizi Aç 👩",
+    defaultMessage: "İyi ki varsın canım annem.",
+  },
+  fathersday: {
+    label: "Babalar Günü",
+    icon: "👨",
+    opening: "canım babama özel bir sürpriz hazırlandı",
+    title: "Babalar Günün Kutlu Olsun",
+    footer: "KartKutusu ile Babalar Günü kartı hazırlandı 👨",
+    button: "Sürprizi Aç 👨",
+    defaultMessage: "Her zaman yanımda olduğun için teşekkür ederim.",
+  },
+  womensday: {
+    label: "Kadınlar Günü",
+    icon: "💐",
+    opening: "sana özel güzel bir Kadınlar Günü kartı hazırlandı",
+    title: "Kadınlar Günün Kutlu Olsun",
+    footer: "KartKutusu ile Kadınlar Günü kartı hazırlandı 💐",
+    button: "Sürprizi Aç 💐",
+    defaultMessage: "Gücün, emeğin ve güzelliğin kutlu olsun.",
+  },
+  teachersday: {
+    label: "Öğretmenler Günü",
+    icon: "🎖️",
+    opening: "değerli öğretmenimize özel bir kart hazırlandı",
+    title: "Öğretmenler Gününüz Kutlu Olsun",
+    footer: "KartKutusu ile Öğretmenler Günü kartı hazırlandı 🎖️",
+    button: "Sürprizi Aç 🎖️",
+    defaultMessage: "Emeğiniz ve ışığınız için teşekkür ederiz.",
+  },
+};
+
 export default function CardView({
   name,
   message,
@@ -59,6 +153,7 @@ export default function CardView({
   photoUrls,
   musicUrl,
   theme,
+  template,
 }: CardViewProps) {
   const [started, setStarted] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
@@ -68,6 +163,9 @@ export default function CardView({
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const selectedTheme = themes[theme as keyof typeof themes] || themes.pink;
+  const selectedTemplate =
+    templates[template as keyof typeof templates] || templates.birthday;
+
   const isDark = theme === "dark";
 
   const galleryPhotos =
@@ -131,14 +229,14 @@ export default function CardView({
         <section
           className={`w-full max-w-xl ${selectedTheme.card} backdrop-blur-xl rounded-3xl shadow-2xl border p-8 text-center`}
         >
-          <div className="text-8xl mb-4">{selectedTheme.icon}</div>
+          <div className="text-8xl mb-4">{selectedTemplate.icon}</div>
 
           <p
             className={`font-bold mb-2 ${
               isDark ? "text-yellow-300" : selectedTheme.title
             }`}
           >
-            KartKutusu • {selectedTheme.name}
+            KartKutusu • {selectedTemplate.label}
           </p>
 
           <h1
@@ -146,18 +244,18 @@ export default function CardView({
               isDark ? "text-white" : "text-gray-900"
             }`}
           >
-            💌 {name || "Arkadaşım"}, bu kart senin için hazırlandı
+            💌 {name || "Arkadaşım"}, {selectedTemplate.opening}
           </h1>
 
           <p className={`mb-8 ${isDark ? "text-gray-200" : "text-gray-600"}`}>
-            Sürprizi görmek için mumları üfle.
+            Sürprizi görmek için butona dokun.
           </p>
 
           <button
             onClick={startCard}
             className={`${selectedTheme.button} px-8 py-4 rounded-2xl text-xl font-bold shadow-lg hover:scale-105 transition`}
           >
-            Mumları Üfle 🎂
+            {selectedTemplate.button}
           </button>
         </section>
       </main>
@@ -180,7 +278,7 @@ export default function CardView({
         ref={cardRef}
         className={`relative z-10 w-full max-w-2xl rounded-3xl ${selectedTheme.card} backdrop-blur-xl shadow-2xl border p-8 text-center`}
       >
-        <div className="text-7xl mb-4">🎉</div>
+        <div className="text-7xl mb-4">{selectedTemplate.icon}</div>
 
         {galleryPhotos.length > 0 && (
           <div className="mb-6">
@@ -222,13 +320,13 @@ export default function CardView({
         <h1
           className={`text-4xl md:text-5xl font-extrabold mb-4 ${selectedTheme.title}`}
         >
-          İyi Ki Doğdun {name || "Arkadaşım"}! 🎉
+          {selectedTemplate.title} {name || "Arkadaşım"}!
         </h1>
 
         <p
           className={`text-lg md:text-xl leading-relaxed max-w-xl mx-auto ${selectedTheme.text}`}
         >
-          {message || "Mutlu yıllar!"}
+          {message || selectedTemplate.defaultMessage}
         </p>
 
         <p
@@ -236,7 +334,7 @@ export default function CardView({
             isDark ? "text-gray-300" : "text-gray-500"
           }`}
         >
-          KartKutusu ile hazırlandı 🎂
+          {selectedTemplate.footer}
         </p>
       </section>
 

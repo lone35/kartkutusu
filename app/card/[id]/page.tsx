@@ -32,6 +32,7 @@ export default async function CardPage({ params }: PageProps) {
       photoUrls={card.photoUrls || []}
       musicUrl={card.musicUrl || ""}
       theme={card.theme || "pink"}
+      template={card.template || "birthday"}
     />
   );
 }
