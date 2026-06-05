@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Confetti from "react-confetti";
 import { toPng } from "html-to-image";
 
 type CardViewProps = {
@@ -62,6 +61,7 @@ const templates = {
     footer: "KartKutusu ile doğum günü sürprizi hazırlandı 🎂",
     button: "Mumları Üfle 🎂",
     defaultMessage: "Mutlu yıllar!",
+    effects: ["🎉", "🎊", "✨", "🎈"],
   },
   love: {
     label: "Sevgiliye Özel",
@@ -71,6 +71,7 @@ const templates = {
     footer: "KartKutusu ile sevgi dolu bir sürpriz hazırlandı ❤️",
     button: "Sürprizi Aç ❤️",
     defaultMessage: "Kalbim hep seninle...",
+    effects: ["❤️", "💖", "💕", "💘"],
   },
   proposal: {
     label: "Evlilik Teklifi",
@@ -80,6 +81,7 @@ const templates = {
     footer: "KartKutusu ile unutulmaz bir teklif hazırlandı 💍",
     button: "Sürprizi Aç 💍",
     defaultMessage: "Bir ömür benimle olur musun?",
+    effects: ["💍", "❤️", "✨", "💖"],
   },
   baby: {
     label: "Yeni Bebek",
@@ -89,6 +91,7 @@ const templates = {
     footer: "KartKutusu ile yeni bebek kutlaması hazırlandı 👶",
     button: "Sürprizi Aç 👶",
     defaultMessage: "Ailemize mutluluk getirdin...",
+    effects: ["👶", "⭐", "🍼", "🎈"],
   },
   graduation: {
     label: "Mezuniyet",
@@ -98,6 +101,7 @@ const templates = {
     footer: "KartKutusu ile mezuniyet kutlaması hazırlandı 🎓",
     button: "Sürprizi Aç 🎓",
     defaultMessage: "Yeni yolun başarılarla dolu olsun.",
+    effects: ["🎓", "🎉", "⭐", "✨"],
   },
   newyear: {
     label: "Yılbaşı",
@@ -107,6 +111,7 @@ const templates = {
     footer: "KartKutusu ile yılbaşı sürprizi hazırlandı 🎄",
     button: "Sürprizi Aç 🎄",
     defaultMessage: "Yeni yıl sana sağlık, mutluluk ve huzur getirsin.",
+    effects: ["❄️", "🎄", "✨", "☃️"],
   },
   mothersday: {
     label: "Anneler Günü",
@@ -116,6 +121,7 @@ const templates = {
     footer: "KartKutusu ile Anneler Günü kartı hazırlandı 👩",
     button: "Sürprizi Aç 👩",
     defaultMessage: "İyi ki varsın canım annem.",
+    effects: ["🌹", "💐", "❤️", "🌸"],
   },
   fathersday: {
     label: "Babalar Günü",
@@ -125,6 +131,7 @@ const templates = {
     footer: "KartKutusu ile Babalar Günü kartı hazırlandı 👨",
     button: "Sürprizi Aç 👨",
     defaultMessage: "Her zaman yanımda olduğun için teşekkür ederim.",
+    effects: ["⭐", "🏆", "💙", "✨"],
   },
   womensday: {
     label: "Kadınlar Günü",
@@ -134,6 +141,7 @@ const templates = {
     footer: "KartKutusu ile Kadınlar Günü kartı hazırlandı 💐",
     button: "Sürprizi Aç 💐",
     defaultMessage: "Gücün, emeğin ve güzelliğin kutlu olsun.",
+    effects: ["💐", "🌸", "🌷", "✨"],
   },
   teachersday: {
     label: "Öğretmenler Günü",
@@ -143,8 +151,64 @@ const templates = {
     footer: "KartKutusu ile Öğretmenler Günü kartı hazırlandı 🎖️",
     button: "Sürprizi Aç 🎖️",
     defaultMessage: "Emeğiniz ve ışığınız için teşekkür ederiz.",
+    effects: ["🎖️", "⭐", "📚", "✨"],
   },
 };
+
+function TemplateEffects({ effects }: { effects: string[] }) {
+  const items = Array.from({ length: 34 });
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+      {items.map((_, index) => {
+        const emoji = effects[index % effects.length];
+        const left = (index * 17) % 100;
+        const delay = (index % 12) * 0.35;
+        const duration = 5 + (index % 6);
+        const size = 22 + (index % 5) * 5;
+
+        return (
+          <span
+            key={index}
+            className="absolute select-none animate-fall"
+            style={{
+              left: `${left}%`,
+              top: "-12%",
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              fontSize: `${size}px`,
+              opacity: 0.85,
+            }}
+          >
+            {emoji}
+          </span>
+        );
+      })}
+
+      <style jsx>{`
+        @keyframes fall {
+          0% {
+            transform: translateY(-20vh) rotate(0deg) scale(0.8);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(125vh) rotate(360deg) scale(1.15);
+            opacity: 0;
+          }
+        }
+
+        .animate-fall {
+          animation-name: fall;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+      `}</style>
+    </div>
+  );
+}
 
 export default function CardView({
   name,
@@ -266,7 +330,7 @@ export default function CardView({
     <main
       className={`min-h-screen flex flex-col items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}
     >
-      <Confetti />
+      <TemplateEffects effects={selectedTemplate.effects} />
 
       {musicUrl && (
         <audio ref={audioRef}>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Confetti from "react-confetti";
 import { QRCodeSVG } from "qrcode.react";
 
 const CLOUDINARY_CLOUD_NAME = "dy2wfdyzl";
@@ -49,6 +48,7 @@ const templates = {
     title: "İyi Ki Doğdun",
     defaultMessage: "Mutlu yıllar!",
     shareText: "Senin için hazırladığım doğum günü kartı 🎂🎉",
+    effects: ["🎉", "🎊", "✨", "🎈"],
   },
   love: {
     label: "Sevgiliye Özel",
@@ -56,6 +56,7 @@ const templates = {
     title: "Seni Çok Seviyorum",
     defaultMessage: "Kalbim hep seninle...",
     shareText: "Senin için romantik bir sürpriz hazırladım ❤️",
+    effects: ["❤️", "💖", "💕", "💘"],
   },
   proposal: {
     label: "Evlilik Teklifi",
@@ -63,6 +64,7 @@ const templates = {
     title: "Benimle Evlenir misin?",
     defaultMessage: "Bir ömür benimle olur musun?",
     shareText: "Senin için çok özel bir sürpriz hazırladım 💍",
+    effects: ["💍", "❤️", "✨", "💖"],
   },
   baby: {
     label: "Yeni Bebek",
@@ -70,6 +72,7 @@ const templates = {
     title: "Hoş Geldin Minik Mucize",
     defaultMessage: "Ailemize mutluluk getirdin...",
     shareText: "Senin için özel bir yeni bebek kartı hazırladım 👶",
+    effects: ["👶", "⭐", "🍼", "🎈"],
   },
   graduation: {
     label: "Mezuniyet",
@@ -77,6 +80,7 @@ const templates = {
     title: "Başarınla Gurur Duyuyoruz",
     defaultMessage: "Yeni yolun başarılarla dolu olsun.",
     shareText: "Senin için mezuniyet sürprizi hazırladım 🎓",
+    effects: ["🎓", "🎉", "⭐", "✨"],
   },
   newyear: {
     label: "Yılbaşı",
@@ -84,6 +88,7 @@ const templates = {
     title: "Mutlu Yıllar",
     defaultMessage: "Yeni yıl sana sağlık, mutluluk ve huzur getirsin.",
     shareText: "Senin için yılbaşı kartı hazırladım 🎄",
+    effects: ["❄️", "🎄", "✨", "☃️"],
   },
   mothersday: {
     label: "Anneler Günü",
@@ -91,6 +96,7 @@ const templates = {
     title: "Anneler Günün Kutlu Olsun",
     defaultMessage: "İyi ki varsın canım annem.",
     shareText: "Senin için Anneler Günü kartı hazırladım 👩",
+    effects: ["🌹", "💐", "❤️", "🌸"],
   },
   fathersday: {
     label: "Babalar Günü",
@@ -98,6 +104,7 @@ const templates = {
     title: "Babalar Günün Kutlu Olsun",
     defaultMessage: "Her zaman yanımda olduğun için teşekkür ederim.",
     shareText: "Senin için Babalar Günü kartı hazırladım 👨",
+    effects: ["⭐", "🏆", "💙", "✨"],
   },
   womensday: {
     label: "Kadınlar Günü",
@@ -105,6 +112,7 @@ const templates = {
     title: "Kadınlar Günün Kutlu Olsun",
     defaultMessage: "Gücün, emeğin ve güzelliğin kutlu olsun.",
     shareText: "Senin için Kadınlar Günü kartı hazırladım 💐",
+    effects: ["💐", "🌸", "🌷", "✨"],
   },
   teachersday: {
     label: "Öğretmenler Günü",
@@ -112,8 +120,64 @@ const templates = {
     title: "Öğretmenler Gününüz Kutlu Olsun",
     defaultMessage: "Emeğiniz ve ışığınız için teşekkür ederiz.",
     shareText: "Senin için Öğretmenler Günü kartı hazırladım 🎖️",
+    effects: ["🎖️", "⭐", "📚", "✨"],
   },
 };
+
+function TemplateEffects({ effects }: { effects: string[] }) {
+  const items = Array.from({ length: 34 });
+
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
+      {items.map((_, index) => {
+        const emoji = effects[index % effects.length];
+        const left = (index * 17) % 100;
+        const delay = (index % 12) * 0.35;
+        const duration = 5 + (index % 6);
+        const size = 22 + (index % 5) * 5;
+
+        return (
+          <span
+            key={index}
+            className="absolute select-none animate-fall"
+            style={{
+              left: `${left}%`,
+              top: "-12%",
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`,
+              fontSize: `${size}px`,
+              opacity: 0.85,
+            }}
+          >
+            {emoji}
+          </span>
+        );
+      })}
+
+      <style jsx>{`
+        @keyframes fall {
+          0% {
+            transform: translateY(-20vh) rotate(0deg) scale(0.8);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(125vh) rotate(360deg) scale(1.15);
+            opacity: 0;
+          }
+        }
+
+        .animate-fall {
+          animation-name: fall;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+      `}</style>
+    </div>
+  );
+}
 
 export default function Home() {
   const [blown, setBlown] = useState(false);
@@ -283,7 +347,7 @@ export default function Home() {
       <main
         className={`min-h-screen flex items-center justify-center ${selectedTheme.bg} p-6 overflow-hidden relative`}
       >
-        <Confetti />
+        <TemplateEffects effects={selectedTemplate.effects} />
         {musicSource && <audio ref={audioRef} src={musicSource} />}
 
         <section
