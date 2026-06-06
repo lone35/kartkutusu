@@ -250,7 +250,7 @@ export default function Home() {
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
-  const [selectedSong, setSelectedSong] = useState("/music/senem.mp3");
+  const [selectedSong, setSelectedSong] = useState("/music/hande.mp3");
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
@@ -593,7 +593,7 @@ export default function Home() {
 
             <input
               type="text"
-              placeholder="Kimin için? Örn: Senem"
+              placeholder="Kimin için? Örn: Hande"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="border border-rose-200 bg-white p-4 rounded-2xl w-full outline-none focus:ring-2 focus:ring-rose-300 text-gray-900 placeholder:text-gray-500"
@@ -706,7 +706,7 @@ export default function Home() {
                   onChange={(e) => setSelectedSong(e.target.value)}
                   className="border border-rose-200 bg-white p-3 rounded-xl w-full mb-3 outline-none text-gray-900"
                 >
-                  <option value="/music/senem.mp3">Senem için şarkı</option>
+                  <option value="/music/hande.mp3">Hande için şarkı</option>
                   <option value="/music/ayse.mp3">Ayşe için şarkı</option>
                   <option value="/music/zeynep.mp3">Zeynep için şarkı</option>
                 </select>
@@ -794,6 +794,34 @@ export default function Home() {
             )}
           </div>
         </div>
+            <footer className="mt-10 border-t border-rose-200 pt-6 text-center text-sm text-gray-600">
+        <div className="flex flex-wrap justify-center gap-6 mb-3">
+          <a
+            href="/gizlilik-politikasi"
+            className="hover:text-rose-600 transition"
+          >
+            Gizlilik Politikası
+          </a>
+
+          <a
+            href="/kullanim-sartlari"
+            className="hover:text-rose-600 transition"
+          >
+            Kullanım Şartları
+          </a>
+
+          <a
+            href="/iletisim"
+            className="hover:text-rose-600 transition"
+          >
+            İletişim
+          </a>
+        </div>
+
+        <p>
+          © {new Date().getFullYear()} KartKutusu.com - Tüm Hakları Saklıdır
+        </p>
+      </footer>
       </section>
     </main>
   );
