@@ -797,21 +797,21 @@ export default function Home() {
             <footer className="mt-10 border-t border-rose-200 pt-6 text-center text-sm text-gray-600">
         <div className="flex flex-wrap justify-center gap-6 mb-3">
           <a
-            href="/gizlilik-politikasi"
+            href="/privacy"
             className="hover:text-rose-600 transition"
           >
             Gizlilik Politikası
           </a>
 
           <a
-            href="/kullanim-sartlari"
+            href="/terms"
             className="hover:text-rose-600 transition"
           >
             Kullanım Şartları
           </a>
 
           <a
-            href="/iletisim"
+            href="/contact"
             className="hover:text-rose-600 transition"
           >
             İletişim
