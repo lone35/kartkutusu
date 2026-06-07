@@ -24,28 +24,6 @@ const templateTitles: Record<string, string> = {
   teachersday: "Öğretmenler Günü Kartı",
 };
 
-function getCardImage(card: any) {
-  const firstPhoto =
-    card?.photoUrl ||
-    (Array.isArray(card?.photoUrls) && card.photoUrls.length > 0
-      ? card.photoUrls[0]
-      : "");
-
-  if (!firstPhoto) {
-    return OG_IMAGE;
-  }
-
-  if (firstPhoto.startsWith("http://") || firstPhoto.startsWith("https://")) {
-    return firstPhoto;
-  }
-
-  if (firstPhoto.startsWith("/")) {
-    return `${SITE_URL}${firstPhoto}`;
-  }
-
-  return OG_IMAGE;
-}
-
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -65,14 +43,9 @@ export async function generateMetadata({
     card?.message ||
     "Senin için hazırlanmış fotoğraflı ve müzikli özel bir sürpriz kart var.";
 
-  const imageUrl = getCardImage(card);
-
   return {
     title,
     description,
-    alternates: {
-      canonical: `${SITE_URL}/card/${id}`,
-    },
     openGraph: {
       title,
       description,
@@ -80,10 +53,10 @@ export async function generateMetadata({
       siteName: "KartKutusu",
       images: [
         {
-          url: imageUrl,
+          url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: "KartKutusu",
         },
       ],
       locale: "tr_TR",
@@ -93,7 +66,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [imageUrl],
+      images: [OG_IMAGE],
     },
   };
 }
