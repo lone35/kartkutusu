@@ -250,7 +250,7 @@ export default function Home() {
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
   const [musicType, setMusicType] = useState<"named" | "upload">("named");
-  const [selectedSong, setSelectedSong] = useState("/music/hande.mp3");
+  const [selectedSong, setSelectedSong] = useState("/music/birthday-happy.mp3");
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
@@ -697,7 +697,7 @@ export default function Home() {
                   checked={musicType === "named"}
                   onChange={() => setMusicType("named")}
                 />
-                <span>İsme özel şarkı seç</span>
+                <span>Hazır müzik seç</span>
               </label>
 
               {musicType === "named" && (
@@ -706,9 +706,18 @@ export default function Home() {
                   onChange={(e) => setSelectedSong(e.target.value)}
                   className="border border-rose-200 bg-white p-3 rounded-xl w-full mb-3 outline-none text-gray-900"
                 >
-                  <option value="/music/hande.mp3">Hande için şarkı</option>
-                  <option value="/music/ayse.mp3">Ayşe için şarkı</option>
-                  <option value="/music/zeynep.mp3">Zeynep için şarkı</option>
+                  <option value="/music/birthday-happy.mp3">🎂 Doğum Günü - Neşeli</option>
+                  <option value="/music/birthday-soft.mp3">🎂 Doğum Günü - Duygusal</option>
+                  <option value="/music/romantic-soft.mp3">❤️ Romantik - Yumuşak</option>
+                  <option value="/music/romantic-piano.mp3">❤️ Romantik - Piyano</option>
+                  <option value="/music/emotional-piano.mp3">✨ Duygusal - Piyano</option>
+                  <option value="/music/emotional-soft.mp3">✨ Duygusal - Yumuşak</option>
+                  <option value="/music/happy-fun.mp3">🎉 Eğlenceli - Mutlu</option>
+                  <option value="/music/party-fun.mp3">🎉 Eğlenceli - Parti</option>
+                  <option value="/music/graduation.mp3">🎓 Mezuniyet</option>
+                  <option value="/music/success.mp3">🎓 Başarı</option>
+                  <option value="/music/newyear.mp3">🎄 Yılbaşı</option>
+                  <option value="/music/winter.mp3">❄️ Kış / Yılbaşı</option>
                 </select>
               )}
 
@@ -794,35 +803,25 @@ export default function Home() {
             )}
           </div>
         </div>
-            <footer className="mt-10 border-t border-rose-200 pt-6 text-center text-sm text-gray-600">
+      </section>
+
+      <footer className="mt-10 border-t border-rose-200 pt-6 text-center text-sm text-gray-600">
         <div className="flex flex-wrap justify-center gap-6 mb-3">
-          <a
-            href="/privacy"
-            className="hover:text-rose-600 transition"
-          >
+          <a href="/privacy" className="hover:text-rose-600 transition">
             Gizlilik Politikası
           </a>
 
-          <a
-            href="/terms"
-            className="hover:text-rose-600 transition"
-          >
+          <a href="/terms" className="hover:text-rose-600 transition">
             Kullanım Şartları
           </a>
 
-          <a
-            href="/contact"
-            className="hover:text-rose-600 transition"
-          >
+          <a href="/contact" className="hover:text-rose-600 transition">
             İletişim
           </a>
         </div>
 
-        <p>
-          © {new Date().getFullYear()} KartKutusu.com - Tüm Hakları Saklıdır
-        </p>
+        <p>© {new Date().getFullYear()} KartKutusu.com - Tüm Hakları Saklıdır</p>
       </footer>
-      </section>
     </main>
   );
 }
