@@ -735,27 +735,80 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-8 bg-white/90 rounded-3xl shadow-xl p-5 max-w-md mx-auto lg:mx-0 border border-rose-100">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="text-4xl">🎂</div>
-              <div>
-                <p className="text-xs font-bold text-rose-600 uppercase tracking-wide">
-                  Örnek Kart
-                </p>
-                <p className="text-sm font-semibold text-gray-500">
-                  Hande için hazırlandı
-                </p>
+          <div className="mt-8 max-w-xl mx-auto lg:mx-0">
+            <div className="relative overflow-hidden rounded-[2rem] border border-rose-100 bg-white/95 p-6 shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-white via-pink-50 to-purple-100" />
+
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <span className="absolute left-8 top-8 animate-bounce text-2xl">🎉</span>
+                <span className="absolute right-10 top-10 animate-pulse text-2xl">✨</span>
+                <span className="absolute bottom-12 left-12 animate-bounce text-2xl">🎊</span>
+                <span className="absolute bottom-8 right-10 animate-pulse text-2xl">💖</span>
               </div>
-            </div>
 
-            <div className="rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 p-4 border border-rose-100">
-              <h4 className="text-xl md:text-2xl font-extrabold text-rose-600 mb-2">
-                İyi Ki Doğdun Hande! 🎉
-              </h4>
+              <div className="relative z-10">
+                <div className="mb-5 flex items-center gap-4">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg">
+                    <span className="animate-bounce text-4xl">🎁</span>
+                  </div>
 
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                Yeni yaşın sana sağlık, mutluluk ve başarı getirsin.
-              </p>
+                  <div>
+                    <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-rose-600">
+                      Nasıl Çalışır?
+                    </p>
+                    <p className="text-base font-bold text-gray-800">
+                      3 adımda unutulmaz sürpriz kart hazırla
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mb-5 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl bg-white p-3 text-center shadow-md border border-rose-100">
+                    <div className="mb-1 text-3xl">📸</div>
+                    <p className="text-xs font-bold text-gray-800">Fotoğrafını Yükle</p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-3 text-center shadow-md border border-rose-100">
+                    <div className="mb-1 text-3xl">💌</div>
+                    <p className="text-xs font-bold text-gray-800">Mesajını Yaz</p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-3 text-center shadow-md border border-rose-100">
+                    <div className="mb-1 text-3xl">🎵</div>
+                    <p className="text-xs font-bold text-gray-800">Müziğini Seç</p>
+                  </div>
+
+                  <div className="rounded-2xl bg-white p-3 text-center shadow-md border border-rose-100">
+                    <div className="mb-1 text-3xl">🔗</div>
+                    <p className="text-xs font-bold text-gray-800">Linkini Paylaş</p>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.75rem] border border-rose-100 bg-white p-4 shadow-inner">
+                  <div className="rounded-[1.5rem] bg-gradient-to-br from-rose-100 via-pink-100 to-purple-100 p-5 text-center">
+                    <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-white shadow-lg">
+                      <span className="animate-pulse text-5xl">🎂</span>
+                    </div>
+
+                    <p className="mb-2 text-xs font-extrabold uppercase tracking-wide text-rose-500">
+                      Sürpriz kart hazırlandı
+                    </p>
+
+                    <h4 className="mb-3 text-3xl font-extrabold leading-tight text-rose-600 md:text-4xl">
+                      Hande İçin Özel Kart 🎊
+                    </h4>
+
+                    <p className="mx-auto max-w-sm text-sm leading-relaxed text-gray-700 md:text-base">
+                      Fotoğrafını ekle, duygularını yaz, müziğini seç ve
+                      unutulmaz bir sürpriz hazırla.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 rounded-2xl bg-gray-900 px-4 py-3 text-center text-sm font-bold text-white shadow-lg">
+                    Önizle → Beğen → Kartını Oluştur 🚀
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
