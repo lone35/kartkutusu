@@ -184,6 +184,30 @@ const templates = {
   },
 };
 
+
+const namedSongs = [
+  { name: "Hande", file: "/music/hande-birthday.mp3" },
+  { name: "Ayşe", file: "/music/ayse-birthday.mp3" },
+  { name: "Zeynep", file: "/music/zeynep-birthday.mp3" },
+  { name: "Elif", file: "/music/elif-birthday.mp3" },
+  { name: "Fatma", file: "/music/fatma-birthday.mp3" },
+  { name: "Emine", file: "/music/emine-birthday.mp3" },
+  { name: "Merve", file: "/music/merve-birthday.mp3" },
+  { name: "Sena", file: "/music/sena-birthday.mp3" },
+  { name: "Buse", file: "/music/buse-birthday.mp3" },
+  { name: "Esra", file: "/music/esra-birthday.mp3" },
+  { name: "Ahmet", file: "/music/ahmet-birthday.mp3" },
+  { name: "Mehmet", file: "/music/mehmet-birthday.mp3" },
+  { name: "Ali", file: "/music/ali-birthday.mp3" },
+  { name: "Mustafa", file: "/music/mustafa-birthday.mp3" },
+  { name: "Emre", file: "/music/emre-birthday.mp3" },
+  { name: "Can", file: "/music/can-birthday.mp3" },
+  { name: "Mert", file: "/music/mert-birthday.mp3" },
+  { name: "Burak", file: "/music/burak-birthday.mp3" },
+  { name: "Yusuf", file: "/music/yusuf-birthday.mp3" },
+  { name: "Kerem", file: "/music/kerem-birthday.mp3" },
+];
+
 function TemplateEffects({ effects }: { effects: string[] }) {
   const items = Array.from({ length: 34 });
 
@@ -249,8 +273,10 @@ export default function Home() {
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
-  const [musicType, setMusicType] = useState<"named" | "upload">("named");
+  const [musicType, setMusicType] = useState<"library" | "name" | "upload">("library");
   const [selectedSong, setSelectedSong] = useState("/music/birthday-happy.mp3");
+  const [nameSongSearch, setNameSongSearch] = useState("");
+  const [showNameSongList, setShowNameSongList] = useState(true);
   const [uploadedSong, setUploadedSong] = useState<string | null>(null);
   const [musicFile, setMusicFile] = useState<File | null>(null);
 
@@ -363,7 +389,7 @@ export default function Home() {
         musicUrl = await uploadMusicDirectlyToCloudinary(musicFile);
       }
 
-      if (musicType === "named") {
+      if (musicType === "library" || musicType === "name") {
         musicUrl = selectedSong;
       }
 
@@ -404,7 +430,11 @@ export default function Home() {
     setCopied(true);
   }
 
-  const musicSource = musicType === "named" ? selectedSong : uploadedSong;
+  const musicSource = musicType === "library" || musicType === "name" ? selectedSong : uploadedSong;
+
+  const filteredNamedSongs = namedSongs.filter((song) =>
+    song.name.toLocaleLowerCase("tr-TR").includes(nameSongSearch.toLocaleLowerCase("tr-TR"))
+  );
 
   if (blown) {
     return (
@@ -694,13 +724,13 @@ export default function Home() {
               <label className="flex items-center gap-2 mb-3 text-gray-900">
                 <input
                   type="radio"
-                  checked={musicType === "named"}
-                  onChange={() => setMusicType("named")}
+                  checked={musicType === "library"}
+                  onChange={() => setMusicType("library")}
                 />
                 <span>Hazır müzik seç</span>
               </label>
 
-              {musicType === "named" && (
+              {musicType === "library" && (
                 <select
                   value={selectedSong}
                   onChange={(e) => setSelectedSong(e.target.value)}
@@ -719,6 +749,60 @@ export default function Home() {
                   <option value="/music/newyear.mp3">🎄 Yılbaşı</option>
                   <option value="/music/winter.mp3">❄️ Kış / Yılbaşı</option>
                 </select>
+              )}
+
+              <label className="flex items-center gap-2 mb-3 text-gray-900">
+                <input
+                  type="radio"
+                  checked={musicType === "name"}
+                  onChange={() => setMusicType("name")}
+                />
+                <span>İsme özel şarkı seç</span>
+              </label>
+
+              {musicType === "name" && (
+                <div className="mb-3 rounded-2xl border border-rose-100 bg-rose-50 p-3">
+                  <input
+                    type="text"
+                    value={nameSongSearch}
+                    onChange={(e) => {
+                      setNameSongSearch(e.target.value);
+                      setShowNameSongList(true);
+                    }}
+                    onFocus={() => setShowNameSongList(true)}
+                    placeholder="İsim yaz... örnek: Hande"
+                    className="border border-rose-200 bg-white p-3 rounded-xl w-full mb-3 outline-none focus:ring-2 focus:ring-rose-300 text-gray-900 placeholder:text-gray-500"
+                  />
+
+                  {showNameSongList && (
+                    <div className="grid gap-2 max-h-56 overflow-y-auto pr-1">
+                      {filteredNamedSongs.length > 0 ? (
+                        filteredNamedSongs.map((song) => (
+                          <button
+                            key={song.file}
+                            type="button"
+                            onClick={() => {
+                              setSelectedSong(song.file);
+                              setNameSongSearch(song.name);
+                              setShowNameSongList(false);
+                            }}
+                            className={`text-left rounded-xl border p-3 text-sm font-bold transition ${
+                            selectedSong === song.file
+                              ? "border-rose-600 bg-white text-rose-700"
+                              : "border-rose-200 bg-white/80 text-gray-800"
+                          }`}
+                        >
+                          🎂 {song.name} İçin Doğum Günü Şarkısı
+                          </button>
+                        ))
+                      ) : (
+                        <p className="text-sm text-gray-600">
+                          Bu isim için hazır şarkı henüz eklenmedi. İstersen kendi şarkını yükleyebilirsin.
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
               )}
 
               <label className="flex items-center gap-2 mb-3 text-gray-900">
