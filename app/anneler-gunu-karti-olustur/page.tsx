@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import SeoTemplate from "@/components/SeoTemplate";
 
 export const metadata: Metadata = {
-  title: "Doğum Günü Kartı Oluştur | Ücretsiz Online Kart - KartKutusu",
+  title: "Anneler Günü Kartı Oluştur | Online Anneye Özel Kart - KartKutusu",
   description:
-    "Fotoğraflı ve müzikli doğum günü kartı oluştur. Ücretsiz online doğum günü kartı hazırlayın ve sevdiklerinizle paylaşın.",
+    "Anneler Günü için fotoğraflı, müzikli ve duygusal kart oluştur. Annenize özel online kart hazırlayın.",
 };
 
 export default function Page() {
   return (
     <SeoTemplate
-      emoji="🎂"
-      title="Doğum Günü Kartı Oluştur"
-      description="KartKutusu ile ücretsiz fotoğraflı ve müzikli doğum günü kartı hazırlayabilir, sevdiklerinizle saniyeler içinde paylaşabilirsiniz."
+      emoji="👩"
+      title="Anneler Günü Kartı Oluştur"
+      description="Annenize sevginizi göstermek için fotoğraflı, mesajlı ve müzikli özel bir Anneler Günü kartı hazırlayın."
       steps={[
         "Kart türünü seçin",
         "Fotoğraf ekleyin",

@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import SeoTemplate from "@/components/SeoTemplate";
 
 export const metadata: Metadata = {
-  title: "Doğum Günü Kartı Oluştur | Ücretsiz Online Kart - KartKutusu",
+  title: "Öğretmenler Günü Kartı Oluştur | Online Öğretmene Kart - KartKutusu",
   description:
-    "Fotoğraflı ve müzikli doğum günü kartı oluştur. Ücretsiz online doğum günü kartı hazırlayın ve sevdiklerinizle paylaşın.",
+    "Öğretmenler Günü için fotoğraflı ve müzikli teşekkür kartı oluştur. Öğretmeninize özel online kart hazırlayın.",
 };
 
 export default function Page() {
   return (
     <SeoTemplate
-      emoji="🎂"
-      title="Doğum Günü Kartı Oluştur"
-      description="KartKutusu ile ücretsiz fotoğraflı ve müzikli doğum günü kartı hazırlayabilir, sevdiklerinizle saniyeler içinde paylaşabilirsiniz."
+      emoji="🎖️"
+      title="Öğretmenler Günü Kartı Oluştur"
+      description="Öğretmeninize emeği ve ışığı için teşekkür etmek üzere özel bir dijital Öğretmenler Günü kartı hazırlayın."
       steps={[
         "Kart türünü seçin",
         "Fotoğraf ekleyin",
