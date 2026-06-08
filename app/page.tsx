@@ -1197,7 +1197,7 @@ export default function Home() {
                 disabled={saving}
                 className="bg-purple-600 text-white px-6 py-4 rounded-2xl text-lg font-bold shadow-lg disabled:opacity-50 hover:scale-[1.02] transition"
               >
-                {saving ? "Kaydediliyor..." : "🎁 Kartı Oluştur ve Satın Al"}
+                {saving ? "Kaydediliyor..." : "🎁 Kartı Oluştur "}
               </button>
             </div>
 
