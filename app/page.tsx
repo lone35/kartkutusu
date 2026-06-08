@@ -387,6 +387,76 @@ const namedSongs = [
   { name: "Serhat", file: "/music/serhat-birthday.mp3" },
 ];
 
+
+function compressImageFile(file: File): Promise<File> {
+  return new Promise((resolve) => {
+    if (!file.type.startsWith("image/")) {
+      resolve(file);
+      return;
+    }
+
+    const imageUrl = URL.createObjectURL(file);
+    const img = new Image();
+
+    img.onload = () => {
+      URL.revokeObjectURL(imageUrl);
+
+      const maxSize = 1400;
+      let { width, height } = img;
+
+      if (width > height && width > maxSize) {
+        height = Math.round((height * maxSize) / width);
+        width = maxSize;
+      } else if (height >= width && height > maxSize) {
+        width = Math.round((width * maxSize) / height);
+        height = maxSize;
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) {
+        resolve(file);
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            resolve(file);
+            return;
+          }
+
+          const compressedFile = new File(
+            [blob],
+            file.name.replace(/\.[^/.]+$/, "") + "-kartkutusu.jpg",
+            {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            }
+          );
+
+          resolve(compressedFile);
+        },
+        "image/jpeg",
+        0.85
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(imageUrl);
+      resolve(file);
+    };
+
+    img.src = imageUrl;
+  });
+}
+
 function TemplateEffects({ effects }: { effects: string[] }) {
   const items = Array.from({ length: 34 });
 
@@ -469,12 +539,16 @@ export default function Home() {
   const selectedTheme = themes[theme];
   const selectedTemplate = templates[template];
 
-  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    setPhotoFiles(files);
-    setPhotoPreviews(files.map((file) => URL.createObjectURL(file)));
+    const compressedFiles = await Promise.all(
+      files.map((file) => compressImageFile(file))
+    );
+
+    setPhotoFiles(compressedFiles);
+    setPhotoPreviews(compressedFiles.map((file) => URL.createObjectURL(file)));
     setGalleryIndex(0);
   }
 
@@ -597,7 +671,9 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
-      alert("Bir hata oluştu. Terminali kontrol et kankam.");
+      alert(
+        "Kart oluşturulurken bir hata oluştu. Fotoğraf çok büyük olabilir veya internet bağlantısı kesilmiş olabilir. Lütfen tekrar deneyin."
+      );
     } finally {
       setSaving(false);
     }
