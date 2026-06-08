@@ -887,6 +887,58 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <section className="mt-8 max-w-xl mx-auto lg:mx-0 rounded-[2rem] border border-rose-200 bg-white/95 p-6 shadow-2xl">
+            <div className="text-center">
+              <p className="text-xs font-extrabold uppercase tracking-[0.25em] text-rose-600">
+                Ürün / Hizmet
+              </p>
+
+              <h2 className="mt-2 text-3xl font-extrabold text-gray-900">
+                🎁 Dijital Sürpriz Kart
+              </h2>
+
+              <p className="mt-3 text-sm leading-relaxed text-gray-700">
+                Fotoğraf, kişisel mesaj ve müzik ile hazırlanan özel kartını
+                oluştur, önizle ve paylaşılabilir kart linkini aktif et.
+              </p>
+
+              <div className="mt-6 rounded-3xl bg-rose-50 p-5 border border-rose-100">
+                <span className="text-5xl font-extrabold text-rose-600">
+                  19,90 TL
+                </span>
+
+                <p className="mt-2 text-sm font-semibold text-gray-600">
+                  Kart başı tek seferlik ödeme
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 text-sm font-bold text-gray-800">
+              <div className="rounded-2xl bg-white p-3 shadow-sm border border-rose-100">
+                ✅ Fotoğraf ekleme
+              </div>
+
+              <div className="rounded-2xl bg-white p-3 shadow-sm border border-rose-100">
+                ✅ Kişisel mesaj
+              </div>
+
+              <div className="rounded-2xl bg-white p-3 shadow-sm border border-rose-100">
+                ✅ Müzik seçme
+              </div>
+
+              <div className="rounded-2xl bg-white p-3 shadow-sm border border-rose-100">
+                ✅ Özel paylaşım linki
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-2xl bg-gray-900 p-4 text-center text-white">
+              <p className="font-bold">Önizleme ücretsizdir.</p>
+              <p className="mt-1 text-sm text-gray-200">
+                Kart linkini aktif etmek için 19,90 TL ödeme alınır.
+              </p>
+            </div>
+          </section>
         </div>
 
         <div className="bg-white rounded-3xl shadow-2xl border border-rose-100 p-6 md:p-8">
