@@ -10,7 +10,7 @@ export default function TermsPage() {
           Kullanım Şartları
         </h1>
 
-        <p className="text-gray-600 mb-8">Son güncelleme: 6 Haziran 2026</p>
+        <p className="text-gray-600 mb-8">Son güncelleme: 8 Haziran 2026</p>
 
         <div className="space-y-6 text-gray-700 leading-relaxed">
           <p>
@@ -20,8 +20,21 @@ export default function TermsPage() {
 
           <h2 className="text-2xl font-bold text-gray-900">Hizmetin Amacı</h2>
           <p>
-            KartKutusu, kullanıcıların özel günler için dijital tebrik ve sürpriz
-            kartları oluşturmasına yardımcı olan bir platformdur.
+            KartKutusu, kullanıcıların özel günler için fotoğraflı, müzikli ve
+            kişisel mesajlı dijital tebrik ve sürpriz kartları oluşturmasına
+            yardımcı olan bir platformdur.
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900">Hizmet Bedeli</h2>
+          <p>
+            KartKutusu üzerinden oluşturulan dijital sürpriz kart hizmeti kart
+            başına tek seferlik 19,90 TL olarak sunulur.
+          </p>
+
+          <p>
+            Kullanıcılar kartlarını ödeme yapmadan önce ücretsiz olarak
+            önizleyebilir. Paylaşılabilir kart bağlantısının aktif edilmesi için
+            ödeme alınır.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900">Kullanıcı Sorumluluğu</h2>
@@ -43,6 +56,30 @@ export default function TermsPage() {
             Oluşturulan kart bağlantıları, bağlantıya sahip kişiler tarafından
             görüntülenebilir. Bu nedenle özel veya hassas bilgilerin paylaşımı
             kullanıcının sorumluluğundadır.
+          </p>
+
+          <h2 className="text-2xl font-bold text-gray-900">
+            Dijital Ürün ve İade Politikası
+          </h2>
+
+          <p>
+            KartKutusu üzerinden oluşturulan dijital sürpriz kartlar kişiye özel
+            olarak hazırlanır ve dijital ortamda teslim edilir.
+          </p>
+
+          <p>
+            Kart oluşturulup paylaşım bağlantısı aktif edildikten sonra hizmet
+            teslim edilmiş sayılır.
+          </p>
+
+          <p>
+            Kişiye özel dijital ürün niteliğinde olduğu için, kart oluşturulduktan
+            ve bağlantı aktif edildikten sonra iptal veya iade yapılamaz.
+          </p>
+
+          <p>
+            Ödeme gerçekleştirilmeden önce kullanıcılar kartlarını ücretsiz olarak
+            önizleyebilir.
           </p>
 
           <h2 className="text-2xl font-bold text-gray-900">Hizmet Değişiklikleri</h2>
