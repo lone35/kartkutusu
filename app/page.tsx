@@ -855,6 +855,12 @@ export default function Home() {
             </div>
 
             <div className="mt-6 rounded-2xl bg-gray-900 p-4 text-center text-white">
+              <a
+  href="/urunler"
+  className="mt-4 block rounded-2xl bg-rose-600 p-4 text-center font-bold text-white shadow-lg hover:bg-rose-700 transition"
+>
+  🎁 Tüm Ürünleri Gör
+</a>
               <p className="font-bold">Önizleme ücretsizdir.</p>
               <p className="mt-1 text-sm text-gray-200">
                 Kart linkini aktif etmek için 19,90 TL ödeme alınır.
@@ -1251,6 +1257,9 @@ export default function Home() {
 
       <footer className="mt-10 border-t border-rose-200 pt-6 text-center text-sm text-gray-600">
         <div className="flex flex-wrap justify-center gap-6 mb-3">
+          <a href="/urunler" className="hover:text-rose-600 transition">
+  Ürünler
+</a>
           <a href="/privacy" className="hover:text-rose-600 transition">
             Gizlilik Politikası
           </a>
