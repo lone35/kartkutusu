@@ -49,7 +49,7 @@ export default function UrunlerPage() {
                   href="/"
                   className="inline-block rounded-2xl bg-rose-600 px-6 py-3 font-bold text-white hover:bg-rose-700"
                 >
-                  Satın Al
+                  Hemen Oluştur ve Satın Al
                 </a>
               </div>
             </div>
