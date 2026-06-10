@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/blog/yeni-yil-mesajlari",
 
     // Diğer Sayfalar
+    "/urunler",
     "/privacy",
     "/terms",
     "/contact",
